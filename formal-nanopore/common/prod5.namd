@@ -1,0 +1,29 @@
+source system_settings.namd
+structure system.psf
+coordinates system.pdb
+outputName prod5
+bincoordinates eq3.coor
+binvelocities eq3.vel
+extendedSystem eq3.xsc
+source ../../common/common.namd
+
+timestep 1.0
+langevin on
+langevinTemp 293
+langevinDamping 1.0
+langevinHydrogen off
+constraints on
+consref restraints_prod.pdb
+conskfile restraints_prod.pdb
+conskcol B
+constraintScaling 1.0
+
+# efield is selected so that efield*cell_z = 23.0605 kcal/(mol e), i.e. 1 V.
+eFieldOn on
+eField 0.0 0.0 $efield
+outputEnergies 5000
+outputTiming 5000
+restartFreq 25000
+xstFreq 25000
+dcdFreq 25000
+run 5000000

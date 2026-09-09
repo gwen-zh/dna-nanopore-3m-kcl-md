@@ -1,0 +1,26 @@
+structure system.psf
+coordinates system.pdb
+outputName eq2
+bincoordinates eq1.restart.coor
+binvelocities eq1.restart.vel
+extendedSystem eq1.restart.xsc
+source common.namd
+
+langevin on
+langevinTemp 293
+langevinDamping 1.0
+langevinHydrogen off
+langevinPiston on
+langevinPistonTarget 1.01325
+langevinPistonTemp 293
+langevinPistonPeriod 200
+langevinPistonDecay 100
+useGroupPressure yes
+useFlexibleCell no
+
+constraints on
+consref restraints.pdb
+conskfile restraints.pdb
+conskcol B
+constraintScaling 0.1
+run 1250000

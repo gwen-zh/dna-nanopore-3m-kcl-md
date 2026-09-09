@@ -1,0 +1,19 @@
+source system_settings.namd
+structure system.psf
+coordinates system.pdb
+outputName eq3
+bincoordinates eq2.coor
+binvelocities eq2.vel
+extendedSystem eq2.xsc
+source ../../common/common.namd
+
+langevin on
+langevinTemp 293
+langevinDamping 1.0
+langevinHydrogen off
+constraints on
+consref restraints_prod.pdb
+conskfile restraints_prod.pdb
+conskcol B
+constraintScaling 1.0
+run 1000000

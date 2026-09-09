@@ -1,0 +1,8 @@
+set cell_x 170.0
+set cell_y 170.0
+set cell_z 260.0
+set origin_z 60.0
+set grid_x 180
+set grid_y 180
+set grid_z 270
+set efield 0.088694

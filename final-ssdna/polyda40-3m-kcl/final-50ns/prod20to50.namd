@@ -1,0 +1,24 @@
+structure system.psf
+coordinates system.pdb
+outputName prod20to50
+bincoordinates prod20.restart.coor
+binvelocities prod20.restart.vel
+extendedSystem prod20.restart.xsc
+firsttimestep 10000000
+source common.namd
+
+langevin on
+langevinTemp 293
+langevinDamping 1.0
+langevinHydrogen off
+langevinPiston on
+langevinPistonTarget 1.01325
+langevinPistonTemp 293
+langevinPistonPeriod 200
+langevinPistonDecay 100
+useGroupPressure yes
+useFlexibleCell no
+
+constraints off
+# Continue 30 ns at 2 fs/step: 15,000,000 additional steps, 50 ns total.
+run 15000000

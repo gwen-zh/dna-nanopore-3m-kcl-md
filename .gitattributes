@@ -1,0 +1,6 @@
+*.coor binary
+*.vel binary
+*.pdb -diff
+*.psf -diff
+*.log -diff
+*.prm -diff

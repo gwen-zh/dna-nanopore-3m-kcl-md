@@ -1,0 +1,22 @@
+structure system.psf
+coordinates system.pdb
+outputName eq3
+bincoordinates eq2.restart.coor
+binvelocities eq2.restart.vel
+extendedSystem eq2.restart.xsc
+source common.namd
+
+langevin on
+langevinTemp 293
+langevinDamping 1.0
+langevinHydrogen off
+langevinPiston on
+langevinPistonTarget 1.01325
+langevinPistonTemp 293
+langevinPistonPeriod 200
+langevinPistonDecay 100
+useGroupPressure yes
+useFlexibleCell no
+
+constraints off
+run 2500000
