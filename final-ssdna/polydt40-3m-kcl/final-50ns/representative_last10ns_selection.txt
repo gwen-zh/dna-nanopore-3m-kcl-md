@@ -1,4 +1,0 @@
-selected_frame 224
-time_ns 42.3
-rgyr_A 25.863039016723633
-end_to_end_A 42.024805390753926

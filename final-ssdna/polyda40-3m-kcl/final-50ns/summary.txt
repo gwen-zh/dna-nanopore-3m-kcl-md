@@ -1,8 +1,0 @@
-all50ns_Rg_A 29.1651
-all50ns_EE_A 59.8926
-last10ns_Rg_A 25.8415
-last10ns_EE_A 52.7580
-last10ns_base_SASA_A2 101.9342
-last10ns_stacked_pairs 17.1500
-last10ns_unstacked_fraction 0.3488
-last10ns_syn_like_fraction 0.6300

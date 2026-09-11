@@ -1,0 +1,18 @@
+structure system.psf
+coordinates system.pdb
+outputName min
+temperature 50
+
+cellBasisVector1 72.0 0.0 0.0
+cellBasisVector2 0.0 72.0 0.0
+cellBasisVector3 0.0 0.0 178.0
+cellOrigin 0.0 0.0 27.0
+source common.namd
+
+constraints on
+consref restraints.pdb
+conskfile restraints.pdb
+conskcol B
+constraintScaling 1.0
+
+minimize 50000

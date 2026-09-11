@@ -1,0 +1,15 @@
+# NAMD changes to the input file's directory before evaluating it.
+if {[info exists env(SYSTEM_DIR)]} { cd $env(SYSTEM_DIR) }
+source system_settings.namd
+structure system.psf
+coordinates system.pdb
+outputName min
+temperature 50
+source ../../common/common.namd
+
+constraints on
+consref restraints_strong.pdb
+conskfile restraints_strong.pdb
+conskcol B
+constraintScaling 1.0
+minimize 50000

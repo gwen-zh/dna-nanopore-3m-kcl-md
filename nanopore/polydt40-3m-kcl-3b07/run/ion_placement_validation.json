@@ -1,0 +1,14 @@
+{
+  "count": 24225,
+  "seed": 3143041332,
+  "box_A": [
+    170.0,
+    170.0,
+    260.0
+  ],
+  "minimum_ion_ion_A": 3.500219924132218,
+  "minimum_ion_solute_A": 5.001654832696206,
+  "requested_from_A": 5.0,
+  "requested_between_A": 3.5,
+  "periodic_distances": true
+}
