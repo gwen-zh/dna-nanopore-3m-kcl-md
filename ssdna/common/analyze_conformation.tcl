@@ -13,7 +13,7 @@ mol new $psf type psf waitfor all
 mol addfile $pdb type pdb waitfor all
 # 5000 stored frames -> analyze every tenth frame (100 ps spacing).
 mol addfile $dcd type dcd first 0 last -1 step 10 waitfor all
-pbc unwrap -all -sel "nucleic"
+pbc join fragment -bondlist -all -sel "nucleic"
 
 set dna [atomselect top "nucleic and noh"]
 set first [atomselect top "nucleic and resid 1 and name C1'"]
@@ -33,7 +33,7 @@ for {set f 1} {$f < $n} {incr f} {
     set dy [expr {[lindex $a 1]-[lindex $b 1]}]
     set dz [expr {[lindex $a 2]-[lindex $b 2]}]
     set ee [expr {sqrt($dx*$dx+$dy*$dy+$dz*$dz)}]
-    set t [expr {$time_offset_ns+($f-1)*0.1}]
+    set t [expr {$time_offset_ns+0.01+($f-1)*0.1}]
     puts $fh "$f,$t,$rg,$ee"
     if {$t >= $selection_start_ns} { lappend records [list $rg $f $t $ee] }
 }
