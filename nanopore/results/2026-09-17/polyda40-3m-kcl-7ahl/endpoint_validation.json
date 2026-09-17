@@ -1,0 +1,30 @@
+[
+  {
+    "event": "geometry_pass",
+    "system": "polyda40-3m-kcl-7ahl",
+    "prefix": "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/pore-fix-20260913/polyda40-3m-kcl-7ahl/run-57323201/prod5",
+    "metrics": {
+      "system": "polyda40-3m-kcl-7ahl",
+      "prefix": "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/pore-fix-20260913/polyda40-3m-kcl-7ahl/run-57323201/prod5",
+      "stage_step": 5000000,
+      "atoms": 477938,
+      "dna_atoms": 1279,
+      "dna_max_bond_A": 1.6634496928506755,
+      "all_min_bond_A": 0.9571999907492946,
+      "all_max_bond_A": 1.9052911092894231,
+      "max_velocity_component_NAMD_units": 3.2268960524245704,
+      "box_A": [
+        141.7,
+        141.7,
+        250.0
+      ],
+      "lipid_aromatic_ring_piercings": [],
+      "repacked_lipid_min_external_heavy_distances_A": {
+        "L13:25": 2.623211695014,
+        "L19:6": 2.463556921896039,
+        "L110:6": 2.6152192260789513,
+        "L110:10": 2.582737624862214
+      }
+    }
+  }
+]

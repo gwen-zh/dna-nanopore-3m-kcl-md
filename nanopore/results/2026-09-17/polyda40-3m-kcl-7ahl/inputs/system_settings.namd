@@ -1,0 +1,9 @@
+set cell_x 141.7
+set legacy_protein_parameters 1
+set cell_y 141.7
+set cell_z 250.0
+set origin_z 65.0
+set grid_x 144
+set grid_y 144
+set grid_z 250
+set efield 0.092242

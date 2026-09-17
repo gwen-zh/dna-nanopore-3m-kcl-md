@@ -1,0 +1,14 @@
+chain,resid,resname,contact_frame_fraction,contact_frames
+D,19,THR,0.795,159
+C,17,ASN,0.785,157
+D,17,ASN,0.69,138
+D,18,THR,0.535,107
+C,16,SER,0.395,79
+C,11,THR,0.245,49
+D,46,LYS,0.215,43
+D,287,GLU,0.11,22
+D,289,GLU,0.1,20
+D,15,GLY,0.04,8
+C,10,GLY,0.03,6
+D,21,LYS,0.01,2
+D,16,SER,0.005,1

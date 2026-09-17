@@ -3,6 +3,19 @@
 poly(dA)40 / poly(dT)40 DNA-only simulations and four DNA–7AHL/3B07
 nanopore workflows. Earlier exploratory simulations are not included.
 
+## dA trajectory results and movies — 2026-09-17
+
+[Results, MP4 movies and downloadable inputs](nanopore/results/2026-09-17/README.md):
+dA–7AHL completed its 5 ns production segment; dA–3B07 is published as an
+explicitly labelled 0–4.825 ns in-progress preview. Neither exported trajectory
+shows complete DNA passage. These are real-coordinate movies of pore-mouth
+interactions and conformational changes, not illustrations of assumed passage.
+
+The two old dT pore runs were stopped while the DNA-only periodic-image issue
+is repaired. New dT pore jobs wait for successful sampling and validation.
+The current dA trajectories use NAMD 2.14 CUDA; see the
+[run-specific protocol](nanopore/results/2026-09-17/PROTOCOL.md).
+
 ## Protocols
 
 - [Nanopore protocol / 过孔模拟流程](nanopore/PROTOCOL.md): system preparation,
@@ -47,6 +60,7 @@ one trajectory, not an independent-replica uncertainty estimate.
 
 ## Software
 
-NAMD 3.0.2; VMD 1.9.2; CHARMM nucleic-acid, protein, lipid and water/ion
+NAMD 2.14 CUDA for the current dA pore trajectories (NAMD 3.0.2 in earlier
+workflow stages); VMD 1.9.2; CHARMM nucleic-acid, protein, lipid and water/ion
 parameters as specified in the protocol; Python 3 with NumPy/SciPy; Slurm.
 Force-field installation paths and the NAMD module name are cluster-specific.

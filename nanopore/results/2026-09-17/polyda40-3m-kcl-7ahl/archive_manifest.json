@@ -1,0 +1,57 @@
+[
+  {
+    "file": "inputs/system.psf.gz",
+    "uncompressed_bytes": 76197439,
+    "source_sha256": "431e9e2ddc6ce2bc6753a2accce0604b35b2b971632e96bf7d8e711e906079d4",
+    "compressed_sha256": "33bff4ea36fdf4d93392e8f15c100016aca0825975c101b6b9649e0d62e2c13b"
+  },
+  {
+    "file": "inputs/system.pdb.gz",
+    "uncompressed_bytes": 37757177,
+    "source_sha256": "0cab86d09efb36590f2e80727c66b0a71cb86fda1ffdd16ee9f44ef7a408ed8a",
+    "compressed_sha256": "320006b9bdaf9ed83b7350c8612956628006fc6fdc0df42309a90a5ecb9fa888"
+  },
+  {
+    "file": "inputs/restraints_prod.pdb.gz",
+    "uncompressed_bytes": 37757177,
+    "source_sha256": "f134340c3ace7a371f40e0ab4f03d4a7f4a342eba93e80fde00f306446ce3d6e",
+    "compressed_sha256": "afbc0c36216d41686f10cb7720e939a0cb52b0f33a52da2a98420b8da5624d90"
+  },
+  {
+    "file": "inputs/production_start.coor.gz",
+    "uncompressed_bytes": 11470516,
+    "source_sha256": "ca4fc764539d84edca35fba1f183e69356ff9d6730feb6b3262963dca1cd1511",
+    "compressed_sha256": "f147e1871ad3f531c568f885ad5f79e6c6f638fdd0cddbd4927bdd04d7e0af0e"
+  },
+  {
+    "file": "inputs/production_start.vel.gz",
+    "uncompressed_bytes": 11470516,
+    "source_sha256": "dc18a88a4ac055ec4b42cc4579f8f568b8dc515a66e01a3096f5f6d0058e0b7f",
+    "compressed_sha256": "a33c370b8db0cf38227093098197fb453acf3a1c641cf92bd3c9fc03d5500781"
+  },
+  {
+    "file": "checkpoint/prod5.coor.gz",
+    "uncompressed_bytes": 11470516,
+    "source_sha256": "923daefb8980aa8a741ca853b4dcea6f0b322247da07340a87c34751aa25e999",
+    "compressed_sha256": "f1280ea4490d49e95d85cb687c10ffd8560dc36cc49594335242e4382fe3f472"
+  },
+  {
+    "file": "checkpoint/prod5.vel.gz",
+    "uncompressed_bytes": 11470516,
+    "source_sha256": "d5a547dec33e7e12d6f0b16544fa135af53569bd96bbebe1e3c7c1950f74eef3",
+    "compressed_sha256": "2b4ac231b9184e8805e12a01930a14df269289a3066c46cc2f0a24e68251b839"
+  },
+  {
+    "file": "production.log.gz",
+    "uncompressed_bytes": 3552539,
+    "source_sha256": "6d85fed2a2d32e85dfee04a063af5209eb983a4eb1881ea5eca59ff5bdfb4b8a",
+    "compressed_sha256": "d95d07e2c291bbc98a7de479e091ee87e12ac0c41ddc36f28ae212f7f8ca353a"
+  },
+  {
+    "file": "visualization.dcd.gz",
+    "uncompressed_bytes": 43864828,
+    "source_sha256": "81c74ee2c4f56fb83e063e401beaf509bd199d05f4cca652ac250edb647e6d49",
+    "compressed_sha256": "82cf40c5104db0cdd5efbe02a39676629d1f0ffd6ba4532fe821cc05eabc8baa",
+    "visualization_only": true
+  }
+]

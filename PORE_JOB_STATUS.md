@@ -1,26 +1,28 @@
 # Nanopore job status
 
-Snapshot: 2026-09-11 09:37 EDT (America/New_York).
-All four preparation jobs are RUNNING on `dept_gpu`, one GPU per system.
+Snapshot: 2026-09-17 16:32 EDT (America/New_York).
 
-| System | Build (completed) | Preparation | Node | Observed minimization step | Production (pending) | Analysis (pending) |
-|---|---:|---:|---|---:|---:|---:|
-| poly(dA)40–7AHL | 57318990 | 57318979 | g007 | 43,848 / 50,000 | 57311449 | 57311450 |
-| poly(dT)40–7AHL | 57318991 | 57318981 | g012 | 41,020 / 50,000 | 57311453 | 57311454 |
-| poly(dA)40–3B07 | 57318992 | 57318983 | g009 | 23,633 / 50,000 | 57311457 | 57311458 |
-| poly(dT)40–3B07 | 57318993 | 57318985 | g010 | 28,679 / 50,000 | 57311461 | 57311462 |
+| System / task | Job | State at snapshot | Published result |
+|---|---:|---|---|
+| poly(dA)40–7AHL | 57323201 | 5 ns production completed; endpoint geometry passed | [5.000 ns result and movie](nanopore/results/2026-09-17/polyda40-3m-kcl-7ahl/) |
+| poly(dA)40–3B07 | 57323197 | RUNNING on dept_gpu | [0–4.825 ns in-progress preview](nanopore/results/2026-09-17/polyda40-3m-kcl-3b07-preview/) |
+| New dT DNA-only, larger box | 57330935 | RUNNING on dept_gpu | Not yet an approved new pore donor |
+| New poly(dT)40–7AHL | 57334241 | PENDING, afterok:57330935 | No new pore trajectory yet |
+| New poly(dT)40–3B07 | 57334242 | PENDING, afterok:57330935 | No new pore trajectory yet |
 
-The sequence is minimization, 0.5 ns heating, 4 ns staged equilibration,
-and 5 ns production at 1 fs. Production waits for successful preparation;
-it is not running yet at this snapshot. Preparation/production request
-one GPU, 8 CPU cores and 16 GB RAM, at normal priority. Maximum simultaneous
-GPU demand for these four chains is four. Other user jobs were not modified.
+The dA–7AHL log ended normally at step 5000000 on September 17 at 09:41 EDT.
+Completion means the scheduled 5 ns segment, not complete DNA translocation.
+Neither exported dA trajectory shows full passage; see the [results](nanopore/results/2026-09-17/README.md).
+The 3B07 movie is a fixed, labelled snapshot, not a continuously updated feed.
 
-This is a timestamped record, not live monitoring or a completion forecast.
-The analysis jobs are queued, but their output will need the periodic-image,
-time-axis and geometry audit described in [the protocol](nanopore/PROTOCOL.md).
+Two GPUs were allocated to this research at the snapshot (dA–3B07 and new dT
+DNA-only); waiting dependencies allocate none. These MD jobs use dept_gpu,
+one non-L40 GPU and eight CPU workers per job. Other user jobs are untouched.
+The actual dA production engine is NAMD 2.14 CUDA, not the earlier NAMD 3.0.2 route.
 
-The published inputs include the repaired intact DNA donors, protein-parameter
-fallback and ion-placement validation used for these builds. Repository path
-renaming was done in a separate clone; running cluster directories were not
-renamed and no new simulation jobs were submitted for this repository update.
+The two previous dT pore jobs were stopped to replace their periodic-image-biased
+DNA donor. New dT pore starts require successful bulk sampling, geometry/image
+and drift checks, safe placement and membrane checks; they are not automatic
+resumes of the old dT trajectories. No dT result is included in this dA release.
+
+Video rendering and analysis use CPUs only and do not interrupt simulations.

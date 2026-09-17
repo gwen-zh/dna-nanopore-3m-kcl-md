@@ -1,0 +1,64 @@
+# Reproduce a production segment from the archived, uncompressed inputs.
+# Set CHARMM_TOPPAR to the original compatible CHARMM parameter directory.
+# This does not submit a job. Run only in a fresh copy after reading PROTOCOL.md.
+cd [file dirname [info script]]
+source inputs/system_settings.namd
+if {[file exists rerun]} { error "Refusing to overwrite existing rerun directory" }
+file mkdir rerun
+structure inputs/system.psf
+coordinates inputs/system.pdb
+bincoordinates inputs/production_start.coor
+binvelocities inputs/production_start.vel
+extendedSystem inputs/production_start.xsc
+outputName rerun/prod5
+firsttimestep 0
+paraTypeCharmm on
+if {[info exists legacy_protein_parameters] && $legacy_protein_parameters} {
+    parameters $env(CHARMM_TOPPAR)/par_all22_prot.prm
+}
+parameters $env(CHARMM_TOPPAR)/par_all36m_prot.prm
+parameters $env(CHARMM_TOPPAR)/par_all36_lipid.prm
+parameters $env(CHARMM_TOPPAR)/par_all36_na.prm
+parameters inputs/water_ions_namd.prm
+cellBasisVector1 $cell_x 0 0
+cellBasisVector2 0 $cell_y 0
+cellBasisVector3 0 0 $cell_z
+cellOrigin 0 0 $origin_z
+wrapAll on
+wrapNearest on
+PME on
+PMEGridSizeX $grid_x
+PMEGridSizeY $grid_y
+PMEGridSizeZ $grid_z
+switching on
+switchDist 10
+cutoff 12
+pairlistdist 14
+margin 0
+exclude scaled1-4
+1-4scaling 1
+rigidBonds all
+timestep 1
+nonbondedFreq 1
+fullElectFrequency 2
+stepsPerCycle 20
+outputEnergies 1000
+outputTiming 1000
+restartFreq 25000
+xstFreq 25000
+dcdFreq 25000
+binaryOutput yes
+binaryRestart yes
+seed 91313026
+constraints on
+consref inputs/restraints_prod.pdb
+conskfile inputs/restraints_prod.pdb
+conskcol B
+constraintScaling 1
+langevin on
+langevinTemp 293
+langevinDamping 1
+langevinHydrogen off
+eFieldOn on
+eField 0 0 $efield
+run 5000000

@@ -1,0 +1,39 @@
+[
+  {
+    "file": "inputs/system.psf.gz",
+    "uncompressed_bytes": 109547117,
+    "source_sha256": "8beb9ec9777bed13cabfacab7b6a669fe43b2fbd1130f22bfaa030f394d054e9",
+    "compressed_sha256": "83486a559fff2004c2271386ad1e10834e4f770c6bd1059fade8383ea6c5745f"
+  },
+  {
+    "file": "inputs/system.pdb.gz",
+    "uncompressed_bytes": 56908120,
+    "source_sha256": "4c6d3f246138ce9fffa49c702d56053fbb7c0794ece921873b2849ca753d354d",
+    "compressed_sha256": "9917b5058fa6f109adcb0b83e7b14b7e8064f86dcc3d5e395fa9ddeceabb4e69"
+  },
+  {
+    "file": "inputs/restraints_prod.pdb.gz",
+    "uncompressed_bytes": 56908120,
+    "source_sha256": "ebf49534550f8309cf2701de128294cb65cf339cd63966e3d28be5cbaa5a6bd8",
+    "compressed_sha256": "0b7a037d958514580ae86ee8e3c1efdb02169a25e3418f51d78d57c9dcfc0c1f"
+  },
+  {
+    "file": "inputs/production_start.coor.gz",
+    "uncompressed_bytes": 17288524,
+    "source_sha256": "891dfeb73e3a282b959e339f0dd98493d441120042c579d2d8640f484471e5f9",
+    "compressed_sha256": "c3b91f607e1d3e855d6707b3b6e15946b11ea783ce4cd7c0846a15a51efe7f07"
+  },
+  {
+    "file": "inputs/production_start.vel.gz",
+    "uncompressed_bytes": 17288524,
+    "source_sha256": "e0110c8e586f187c93f017978a9c021a2d10f8100f2d574243d19ee37551f5c4",
+    "compressed_sha256": "56e97a70703b3f03652ab241a31b4201554d24ee3ccde419c418183c575ce08a"
+  },
+  {
+    "file": "visualization.dcd.gz",
+    "uncompressed_bytes": 46131844,
+    "source_sha256": "b1684bed8a7c6319f83589c1f37a3d3a6d60ef0cda3a69de6f8cd24fda27c6b2",
+    "compressed_sha256": "f727d331e1a3a446c5d8c83a99651b72cda0c0f925e14ba3d15aee90aa5ad4d2",
+    "visualization_only": true
+  }
+]

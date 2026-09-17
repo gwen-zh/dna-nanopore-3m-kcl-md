@@ -1,0 +1,19 @@
+{
+  "codec": "H.264",
+  "container": "MP4",
+  "dimensions": [
+    1280,
+    960
+  ],
+  "fps": 10,
+  "frames": 201,
+  "duration_seconds": 20.1,
+  "physical_time_ns": 5.0,
+  "source_frame_spacing_ps": 25,
+  "interpolation": false,
+  "decoded_all_frames": true,
+  "ffmpeg_version": "7.0.2-static",
+  "distinct_molecular_frames": 201,
+  "water_and_ions_hidden": true,
+  "protein_front_chains_transparent": true
+}
