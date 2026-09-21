@@ -1,39 +1,31 @@
 # ssDNA simulations
 
-The current structural comparison, all plots, per-frame/per-residue data and
-representative PDBs are in
-[`results/2026-09-21/`](results/2026-09-21/README.md). Reusable analysis code
-is kept separately in [`scripts/`](scripts/README.md).
+The ssDNA files are organized by sequence. Each retained sequence has its own
+`scripts/` and `results/` directory; cross-sequence analysis is kept separately
+under `comparison/`.
 
-| Dataset | Current use |
-|---|---|
-| `polyda40-3m-kcl/50ns/` | Valid dA source; comparison uses 45.01–50.00 ns. |
-| `polydt40-3m-kcl/repaired-5ns/` | Valid image-safe dT source; comparison uses 0.01–5.00 ns. |
-| `polydt40-3m-kcl/50ns/` | Archived invalid source; do not use for structural conclusions. |
+| Dataset | Scripts | Results |
+|---|---|---|
+| poly(dA)40 in 3 M KCl | [`polyda40-3m-kcl/scripts/`](polyda40-3m-kcl/scripts/README.md) | [`polyda40-3m-kcl/results/`](polyda40-3m-kcl/results/README.md) |
+| poly(dT)40 in 3 M KCl | [`polydt40-3m-kcl/scripts/`](polydt40-3m-kcl/scripts/README.md) | [`polydt40-3m-kcl/results/`](polydt40-3m-kcl/results/README.md) |
+| dA40/dT40 comparison | [`comparison/scripts/`](comparison/scripts/README.md) | [`comparison/results/`](comparison/results/README.md) |
 
 The common preparation is 50,000 minimization steps, 0.5 ns heating, 2 ns
 restrained equilibration, 2.5 ns weak-restraint equilibration and 5 ns
-unrestrained equilibration, with a 2 fs timestep. dA production is a continuous
-20 ns segment plus 30 ns continuation. Repaired dT currently contains one
-validated 5 ns production block after the same preparation schedule.
+unrestrained equilibration, with a 2 fs timestep at 293 K. dA has 50 ns
+production. The retained, image-safe dT dataset currently has one validated
+5 ns production block after the same preparation schedule.
 
-DCD filenames, sizes and hashes are in
-[the original manifest](../data-manifest/ssdna_dcd.sha256) and
-[the repaired-dT manifest](../data-manifest/repaired_dt_5ns.sha256).
+The dT 5 ns block is retained because it is the dT trajectory used by the
+validated comparison. The older dT 50 ns export had periodic-image contacts and
+has been removed from the current repository tree.
 
-## Analysis status
+Large omitted trajectories are recorded in
+[`polyda40_dcd.sha256`](../data-manifest/polyda40_dcd.sha256) and
+[`polydt40_dcd.sha256`](../data-manifest/polydt40_dcd.sha256).
 
-The 2026-09-21 results are recalculated from 500 frames per sequence after
-PSF-bond reconstruction. They include Rg, end-to-end/contour length, shape,
-stacking, χ/syn occupancy, outward base orientation, nonlocal contacts,
-hydrogen bonds, RMSF, ion association and hydration.
-
-The older CSVs and representative structures inside `polydt40-3m-kcl/50ns/`
-are retained only for provenance. They are superseded and must not be mixed
-with the repaired results.
-
-For nanopore construction, use the validated donor files recorded by the
-[nanopore protocol](../nanopore/PROTOCOL.md), not an older representative export.
-
-Log normalization changes only the working-directory header to a repository
-path. Energy, timing and other numerical records are unchanged.
+The validated comparison uses 500 frames per sequence after PSF-bond
+reconstruction. It covers Rg, end-to-end and contour lengths, shape, stacking,
+χ/syn occupancy, outward base orientation, contacts, hydrogen bonds, RMSF,
+ion association and hydration. There is one usable trajectory per sequence,
+so frame variability is descriptive rather than independent-replica uncertainty.

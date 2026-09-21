@@ -5,16 +5,16 @@ nanopore workflows. Earlier exploratory simulations are not included.
 
 ## Validated ssDNA comparison — 2026-09-21
 
-[Figures, CSV data, representative structures and reproducible analysis](ssdna/results/2026-09-21/README.md)
+[Figures, CSV data, representative structures and reproducible analysis](ssdna/comparison/results/2026-09-21/README.md)
 compare equal 5 ns windows after PSF-bond periodic reconstruction. In these
 windows, dA40 is more compact and less rod-like than dT40, with higher syn and
 outward base orientation. dT40 has substantially more loss of adjacent
 stacking. The comparison uses dA 45.01–50.00 ns and the complete 0.01–5.00 ns
-production from the [repaired dT branch](ssdna/polydt40-3m-kcl/repaired-5ns/README.md).
+production from the [image-safe dT branch](ssdna/polydt40-3m-kcl/README.md).
 
 The repaired dT run completed normally and remained at least 85.886 Å from its
-nearest periodic image. The older dT 50 ns trajectory is retained only as an
-invalidated archive and is not used for current structural conclusions.
+nearest periodic image. The invalid older dT 50 ns export has been removed from
+the current repository tree and is not used for structural conclusions.
 
 ## dA trajectory results and movies — 2026-09-17
 
@@ -40,7 +40,7 @@ The current dA trajectories use NAMD 2.14 CUDA; see the
 The DNA-only preparation is 50,000 minimization steps → 0.5 ns heating →
 2 ns restrained equilibration → 2.5 ns weak-restraint equilibration →
 5 ns unrestrained equilibration at 2 fs, 293 K and 1 atm. dA then has 50 ns
-production; repaired dT currently has one validated 5 ns production block.
+production; dT currently has one validated 5 ns production block.
 
 The nanopore sequence is 50,000 minimization steps → 0.5 ns heating →
 4 ns staged equilibration → 5 ns electric-field production at 1 fs.
@@ -48,10 +48,9 @@ The pore boxes are fixed; this is not the pressure-coupled DNA-only protocol.
 
 ## Repository contents
 
-- `ssdna/polyda40-3m-kcl/50ns/`: dA inputs, stage logs and checkpoints.
-- `ssdna/polydt40-3m-kcl/repaired-5ns/`: repaired dT inputs and validation.
-- `ssdna/scripts/`: reusable ssDNA analysis scripts.
-- `ssdna/results/`: validated figures, tables, representative PDBs and checks.
+- `ssdna/polyda40-3m-kcl/{scripts,results}/`: dA run inputs/code and outputs.
+- `ssdna/polydt40-3m-kcl/{scripts,results}/`: image-safe dT code and outputs.
+- `ssdna/comparison/{scripts,results}/`: cross-sequence analysis and figures.
 - `nanopore/<sequence>-3m-kcl-<pore>/run/`: DNA placement, system settings and
   ion-placement checks; `nanopore/common/` contains the shared workflow.
 - `nanopore/7ahl-template/`, `nanopore/3b07-template/`: processed pore/membrane/water templates.
@@ -65,15 +64,16 @@ to the repository path; numerical simulation records are unchanged.
 
 ## Data-quality note
 
-A periodic-image problem was confirmed in the older dT 50 ns trajectory. Its
-files remain available for provenance but must not be used to establish dA/dT
-differences. The repaired dT branch was rebuilt in a 180 Å water box and passed
-all-frame bond and image-distance checks. The 2026-09-21 comparison explicitly
-reconstructs both DNAs through PSF bonds before analysis.
+A periodic-image problem was confirmed in the older dT 50 ns trajectory. That
+invalid export is absent from the current tree; the original cluster data and
+Git history remain recoverable if provenance review is needed. The retained dT
+branch was rebuilt in a 180 Å water box and passed all-frame bond and
+image-distance checks. The 2026-09-21 comparison explicitly reconstructs both
+DNAs through PSF bonds before analysis.
 
 Each sequence currently has one usable trajectory, not an independent-replica
 uncertainty estimate. The equal windows are also at different trajectory ages:
-dA uses its last 5 ns, whereas repaired dT uses its first 5 ns production block.
+dA uses its last 5 ns, whereas dT uses its first 5 ns production block.
 
 ## Software
 
