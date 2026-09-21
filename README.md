@@ -5,7 +5,7 @@ nanopore workflows. Earlier exploratory simulations are not included.
 
 ## Validated ssDNA comparison — 2026-09-21
 
-[Figures, CSV data, representative structures and reproducible analysis](ssdna/analysis-2026-09-21/README.md)
+[Figures, CSV data, representative structures and reproducible analysis](ssdna/results/2026-09-21/README.md)
 compare equal 5 ns windows after PSF-bond periodic reconstruction. In these
 windows, dA40 is more compact and less rod-like than dT40, with higher syn and
 outward base orientation. dT40 has substantially more loss of adjacent
@@ -50,7 +50,8 @@ The pore boxes are fixed; this is not the pressure-coupled DNA-only protocol.
 
 - `ssdna/polyda40-3m-kcl/50ns/`: dA inputs, stage logs and checkpoints.
 - `ssdna/polydt40-3m-kcl/repaired-5ns/`: repaired dT inputs and validation.
-- `ssdna/analysis-2026-09-21/`: validated figures, tables, PDBs and source code.
+- `ssdna/scripts/`: reusable ssDNA analysis scripts.
+- `ssdna/results/`: validated figures, tables, representative PDBs and checks.
 - `nanopore/<sequence>-3m-kcl-<pore>/run/`: DNA placement, system settings and
   ion-placement checks; `nanopore/common/` contains the shared workflow.
 - `nanopore/7ahl-template/`, `nanopore/3b07-template/`: processed pore/membrane/water templates.

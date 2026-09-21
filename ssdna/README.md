@@ -2,7 +2,8 @@
 
 The current structural comparison, all plots, per-frame/per-residue data and
 representative PDBs are in
-[`analysis-2026-09-21/`](analysis-2026-09-21/README.md).
+[`results/2026-09-21/`](results/2026-09-21/README.md). Reusable analysis code
+is kept separately in [`scripts/`](scripts/README.md).
 
 | Dataset | Current use |
 |---|---|

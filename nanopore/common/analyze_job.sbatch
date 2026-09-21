@@ -10,7 +10,7 @@ set -euo pipefail
 cd "$SYSTEM_DIR"
 vmd -dispdev text -e ../../common/analyze_pore.tcl \
     -args system.psf system.pdb prod5.dcd "$ANALYSIS_PREFIX"
-vmd -dispdev text -e ../../../ssdna/common/analyze_base_flipping.tcl \
+vmd -dispdev text -e ../../../ssdna/scripts/analyze_base_flipping.tcl \
     -args system.psf system.pdb prod5.dcd "$DNA_BASE" \
     "$ANALYSIS_PREFIX" 0.0 0.0 10 0.25
 

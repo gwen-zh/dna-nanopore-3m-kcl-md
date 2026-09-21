@@ -12,13 +12,13 @@
 set -euo pipefail
 cd "${SLURM_SUBMIT_DIR:-$PWD}"
 
-vmd -dispdev text -e ../../common/analyze_conformation.tcl \
+vmd -dispdev text -e ../../scripts/analyze_conformation.tcl \
     -args system.psf system.pdb prod20.dcd .segment20 10.0 0.0
-vmd -dispdev text -e ../../common/analyze_conformation.tcl \
+vmd -dispdev text -e ../../scripts/analyze_conformation.tcl \
     -args system.psf system.pdb prod20to50.dcd .segment30 40.0 20.0
-vmd -dispdev text -e ../../common/analyze_base_flipping.tcl \
+vmd -dispdev text -e ../../scripts/analyze_base_flipping.tcl \
     -args system.psf system.pdb prod20.dcd THY .segment20 0.0 10.0
-vmd -dispdev text -e ../../common/analyze_base_flipping.tcl \
+vmd -dispdev text -e ../../scripts/analyze_base_flipping.tcl \
     -args system.psf system.pdb prod20to50.dcd THY .segment30 20.0 40.0
 
 awk 'FNR == 1 && NR != 1 {next} {print}' \

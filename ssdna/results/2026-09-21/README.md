@@ -101,7 +101,8 @@ distance of 85.886 Å, so no short-range periodic-image contact occurs.
 - `dA40_*_occupancy.csv`, `dT40_*_occupancy.csv`: 40 × 40 contact, stack and hydrogen-bond occupancies.
 - `dA40_representative.pdb`, `dT40_representative.pdb`: real sampled representative frames.
 - `01`–`07` `.png` and `.pdf`: raster and vector versions of every plot.
-- [`analyze.py`](analyze.py): standalone Python analysis and plotting source.
+- [`../../scripts/analyze_equal_window.py`](../../scripts/analyze_equal_window.py):
+  standalone Python analysis and plotting source.
 
 ## Limits
 
