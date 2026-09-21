@@ -1,0 +1,55 @@
+cd $env(DT_REPAIR_BUILD)
+structure system.psf
+coordinates system.pdb
+outputName $env(OUTPUT_PREFIX)
+firsttimestep 0
+source $env(DT_REPAIR_ROOT)/common.namd
+set mode $env(STAGE_MODE)
+if {$mode eq "min"} {
+    temperature 50
+    cellBasisVector1 180.0 0.0 0.0
+    cellBasisVector2 0.0 180.0 0.0
+    cellBasisVector3 0.0 0.0 180.0
+    cellOrigin 0.0 0.0 0.0
+} else {
+    bincoordinates "$env(INPUT_PREFIX).coor"
+    extendedSystem "$env(INPUT_PREFIX).xsc"
+    if {$mode eq "heat"} {
+        temperature 50
+    } else {
+        binvelocities "$env(INPUT_PREFIX).vel"
+    }
+}
+if {$env(RESTRAINT_SCALE) > 0} {
+    constraints on
+    consref restraints.pdb
+    conskfile restraints.pdb
+    conskcol B
+    constraintScaling $env(RESTRAINT_SCALE)
+} else {
+    constraints off
+}
+if {$mode eq "min"} {
+    minimize $env(STAGE_STEPS)
+} elseif {$mode eq "heat"} {
+    # Same 50 -> 293 K, 0.5 ns schedule as the previous DNA-only protocol.
+    reassignFreq 1000
+    reassignTemp 50
+    reassignIncr 1.0
+    reassignHold 293
+    reinitvels 50
+    run $env(STAGE_STEPS)
+} else {
+    langevin on
+    langevinTemp 293
+    langevinDamping 1.0
+    langevinHydrogen off
+    langevinPiston on
+    langevinPistonTarget 1.01325
+    langevinPistonTemp 293
+    langevinPistonPeriod 200
+    langevinPistonDecay 100
+    useGroupPressure yes
+    useFlexibleCell no
+    run $env(STAGE_STEPS)
+}

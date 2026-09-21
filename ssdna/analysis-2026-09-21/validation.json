@@ -1,0 +1,49 @@
+{
+  "dA40": {
+    "sequence": "poly(dA)40",
+    "label": "dA40",
+    "psf": "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/polyda40-3m-kcl/formal-10ns/system.psf",
+    "dcd": "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/polyda40-3m-kcl/formal-10ns/prod20to50.dcd",
+    "total_DCD_frames": 3000,
+    "analyzed_frames": 500,
+    "selected_frame_range_zero_based": [
+      2500,
+      2999
+    ],
+    "source_time_range_ns": [
+      45.01,
+      50.0
+    ],
+    "analyzed_window_ns": 5.0,
+    "maximum_DNA_bond_A": 1.7071882718810618,
+    "representative_frame_zero_based": 2737,
+    "representative_source_time_ns": 47.379999999999995
+  },
+  "dT40": {
+    "sequence": "poly(dT)40",
+    "label": "dT40",
+    "psf": "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/dt-image-repair-20260915/box180/system.psf",
+    "dcd": "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/dt-image-repair-20260915/run-57330935/prod5.dcd",
+    "total_DCD_frames": 500,
+    "analyzed_frames": 500,
+    "selected_frame_range_zero_based": [
+      0,
+      499
+    ],
+    "source_time_range_ns": [
+      0.01,
+      5.0
+    ],
+    "analyzed_window_ns": 5.0,
+    "maximum_DNA_bond_A": 1.7037349855490855,
+    "representative_frame_zero_based": 59,
+    "representative_source_time_ns": 0.6
+  },
+  "method": "PSF-bond reconstruction; equal 5 ns windows; frame statistics are descriptive, not independent-replica uncertainty",
+  "input_sha256": {
+    "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/polyda40-3m-kcl/formal-10ns/system.psf": "612d66d80624ed53b6daf81e12cdbe69348477512eec6d76b5a10c45ee21ee52",
+    "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/polyda40-3m-kcl/formal-10ns/prod20to50.dcd": "060826292d638fb814527537f7a95c765f5fef990be7d1f52b13efe7c78ea90f",
+    "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/dt-image-repair-20260915/box180/system.psf": "a0d6451fda52af6c23f9b5072ec1f34eb605b041ee902ea627c43e166f1a6c90",
+    "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/dt-image-repair-20260915/run-57330935/prod5.dcd": "a43acd0eadd08328db1511989b98b898b238e149bdc1d38f0439c1d38e49e307"
+  }
+}

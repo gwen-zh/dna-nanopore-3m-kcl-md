@@ -1,0 +1,5 @@
+# Omitted large inputs/results for ssdna/polydt40-3m-kcl/repaired-5ns/
+# SIZE_BYTES  SHA256  REPOSITORY_RELATIVE_NAME
+41616406  8ab0f3bd2eba1c963c41508f0f695013df0061b740eca7a2d42934f1249da306  ssdna/polydt40-3m-kcl/repaired-5ns/system.pdb
+65434575  a0d6451fda52af6c23f9b5072ec1f34eb605b041ee902ea627c43e166f1a6c90  ssdna/polydt40-3m-kcl/repaired-5ns/system.psf
+3160774276  a43acd0eadd08328db1511989b98b898b238e149bdc1d38f0439c1d38e49e307  ssdna/polydt40-3m-kcl/repaired-5ns/prod5.dcd

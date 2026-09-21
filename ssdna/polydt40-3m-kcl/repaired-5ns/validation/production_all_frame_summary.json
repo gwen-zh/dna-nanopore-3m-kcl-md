@@ -1,0 +1,43 @@
+{
+  "job_id": 57330935,
+  "partition": "dept_gpu",
+  "gpu_policy": "one non-L40 GPU",
+  "engine": "NAMD 2.14 CUDA",
+  "production_steps": 2500000,
+  "timestep_fs": 2.0,
+  "production_ns": 5.0,
+  "frames": 500,
+  "frame_interval_ps": 10.0,
+  "completed_ed_time": "2026-09-19T20:59:59-04:00",
+  "normal_termination": true,
+  "rg_A": {
+    "min": 25.06248087559828,
+    "mean": 27.31758047747104,
+    "max": 29.309786768861983,
+    "endpoint": 27.11851990810177
+  },
+  "end_to_end_A": {
+    "min": 60.92019742796919,
+    "mean": 70.83320600271517,
+    "max": 78.94305047787203,
+    "endpoint": 73.49632299034486
+  },
+  "maximum_DNA_bond_A": 1.7037349855490855,
+  "minimum_periodic_image_distance_A": 85.88643435205519,
+  "box_length_A": {
+    "min": 175.36739413081966,
+    "mean": 175.4567912470685,
+    "max": 175.54602708200483
+  },
+  "mean_box_molar": {
+    "K_including_counterions": 3.2777611254853163,
+    "Cl": 3.2657715659379587
+  },
+  "last_1ns_temperature_K": {
+    "records": 501,
+    "mean": 292.24570638722554,
+    "min": 291.0351,
+    "max": 293.2853
+  },
+  "prod5_dcd_sha256": "a43acd0eadd08328db1511989b98b898b238e149bdc1d38f0439c1d38e49e307"
+}

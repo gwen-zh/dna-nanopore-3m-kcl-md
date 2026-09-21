@@ -1,0 +1,19 @@
+{
+  "rg_A": 29.393757490297627,
+  "end_to_end_A": 77.03200998286361,
+  "dna_max_bond_A": 1.6426232069467421,
+  "nearest_periodic_image_A": 113.95142529165662,
+  "box_x_A": 180.0,
+  "box_y_A": 180.0,
+  "box_z_A": 180.0,
+  "K_box_molar": 3.035779755522557,
+  "Cl_box_molar": 3.0246753276042133,
+  "atoms": 526789,
+  "dna_atoms": 1279,
+  "n_K": 10662,
+  "n_Cl": 10623,
+  "n_waters": 168075,
+  "all_min_bond_A": 0.8476998289488968,
+  "all_max_bond_A": 1.6426232069467421,
+  "minimum_any_heavy_atom_pair_A": 1.0804263047519722
+}
