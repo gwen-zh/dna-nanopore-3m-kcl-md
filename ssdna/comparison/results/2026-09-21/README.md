@@ -68,6 +68,23 @@ bases, and a more extended dT ensemble with greater local stacking disorder.
 In the state heat maps, purple is 0 and yellow is 1. In the top row, 1 means
 syn; in the bottom row, 1 means no strict stack with either sequence neighbor.
 
+![Residue contact and base-stacking occupancy maps](04_contact_and_stack_maps.png)
+
+![Structural metric distributions](05_distributions.png)
+
+![Ion-association and hydration measurements](06_ion_and_hydration_contacts.png)
+
+![Representative dA40 and dT40 structures](07_representative_structures.png)
+
+Each figure is also available as a vector PDF:
+[`01`](01_global_structure.pdf),
+[`02`](02_residue_profiles.pdf),
+[`03`](03_base_state_heatmaps.pdf),
+[`04`](04_contact_and_stack_maps.pdf),
+[`05`](05_distributions.pdf),
+[`06`](06_ion_and_hydration_contacts.pdf) and
+[`07`](07_representative_structures.pdf).
+
 ## Operational definitions
 
 - Rg is mass-weighted over DNA heavy atoms. Shape anisotropy ranges from 0 for

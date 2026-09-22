@@ -10,6 +10,17 @@ under `comparison/`.
 | poly(dT)40 in 3 M KCl | [`polydt40-3m-kcl/scripts/`](polydt40-3m-kcl/scripts/README.md) | [`polydt40-3m-kcl/results/`](polydt40-3m-kcl/results/README.md) |
 | dA40/dT40 comparison | [`comparison/scripts/`](comparison/scripts/README.md) | [`comparison/results/`](comparison/results/README.md) |
 
+## Analysis figures
+
+The complete seven-figure gallery is available in the
+[`2026-09-21 comparison results`](comparison/results/2026-09-21/README.md),
+with both PNG and PDF versions. The first two figures are previewed here so the
+analysis is visible directly from the ssDNA page.
+
+![Global structural metrics for dA40 and dT40](comparison/results/2026-09-21/01_global_structure.png)
+
+![Per-residue structural profiles for dA40 and dT40](comparison/results/2026-09-21/02_residue_profiles.png)
+
 The common preparation is 50,000 minimization steps, 0.5 ns heating, 2 ns
 restrained equilibration, 2.5 ns weak-restraint equilibration and 5 ns
 unrestrained equilibration, with a 2 fs timestep at 293 K. dA has 50 ns
