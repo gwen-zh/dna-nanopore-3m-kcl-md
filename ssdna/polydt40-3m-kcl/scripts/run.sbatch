@@ -9,9 +9,9 @@
 #SBATCH --gres=gpu:1
 #SBATCH --mem=24G
 #SBATCH --time=7-00:00:00
-#SBATCH --output=/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/dt-image-repair-20260915/run.%j.out
-#SBATCH --error=/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/dt-image-repair-20260915/run.%j.err
+#SBATCH --output=ssdna-dt.%j.out
+#SBATCH --error=ssdna-dt.%j.err
 set -euo pipefail
 ulimit -c 0
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VMDFORCECPUCOUNT=1 VMDCUDA=0
-python3 -u /net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/dt-image-repair-20260915/run.py
+python3 -u "$(dirname "$0")/run.py"

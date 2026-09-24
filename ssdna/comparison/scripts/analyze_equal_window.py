@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Equal-window structural analysis for dA40 and image-repaired dT40.
+"""Equal-window structural analysis for dA40 and dT40.
 
-The comparison uses the last 5 ns of the mature dA trajectory and the complete
-5 ns production block of the rebuilt, large-box dT trajectory.  Coordinates
-are reconstructed through PSF bonds before any molecular geometry is measured.
+The comparison uses the 45.01–50.00 ns window of the dA trajectory and the
+complete 5 ns dT production block. Coordinates are reconstructed through PSF
+bonds before any molecular geometry is measured.
 """
 import argparse
 import collections
@@ -325,7 +325,7 @@ def main():
     parser.add_argument('--da-psf',type=Path,required=True);parser.add_argument('--da-dcd',type=Path,required=True)
     parser.add_argument('--dt-psf',type=Path,required=True);parser.add_argument('--dt-dcd',type=Path,required=True)
     parser.add_argument('--frames',type=int,default=500)
-    parser.add_argument('--out',type=Path,default=Path(__file__).resolve().parent.parent/'results'/'2026-09-21')
+    parser.add_argument('--out',type=Path,default=Path(__file__).resolve().parent.parent/'results')
     args=parser.parse_args();args.out.mkdir(parents=True,exist_ok=True)
     setups={'dA40':source_setup('dA40',args.da_psf,args.da_dcd,args.frames),
             'dT40':source_setup('dT40',args.dt_psf,args.dt_dcd,args.frames)}

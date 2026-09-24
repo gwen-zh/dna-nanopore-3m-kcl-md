@@ -13,23 +13,19 @@ under `comparison/`.
 ## Analysis figures
 
 The complete seven-figure gallery is available in the
-[`2026-09-21 comparison results`](comparison/results/2026-09-21/README.md),
+[`comparison results`](comparison/results/README.md),
 with both PNG and PDF versions. The first two figures are previewed here so the
 analysis is visible directly from the ssDNA page.
 
-![Global structural metrics for dA40 and dT40](comparison/results/2026-09-21/01_global_structure.png)
+![Global structural metrics for dA40 and dT40](comparison/results/01_global_structure.png)
 
-![Per-residue structural profiles for dA40 and dT40](comparison/results/2026-09-21/02_residue_profiles.png)
+![Per-residue structural profiles for dA40 and dT40](comparison/results/02_residue_profiles.png)
 
 The common preparation is 50,000 minimization steps, 0.5 ns heating, 2 ns
 restrained equilibration, 2.5 ns weak-restraint equilibration and 5 ns
 unrestrained equilibration, with a 2 fs timestep at 293 K. dA has 50 ns
-production. The retained, image-safe dT dataset currently has one validated
-5 ns production block after the same preparation schedule.
-
-The dT 5 ns block is retained because it is the dT trajectory used by the
-validated comparison. The older dT 50 ns export had periodic-image contacts and
-has been removed from the current repository tree.
+production. The dT dataset has one 5 ns production block after the same
+preparation schedule.
 
 Large omitted trajectories are recorded in
 [`polyda40_dcd.sha256`](../data-manifest/polyda40_dcd.sha256) and

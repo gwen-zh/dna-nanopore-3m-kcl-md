@@ -36,9 +36,10 @@ def record(event, **fields):
     with (WORK / 'events.jsonl').open('a') as stream:
         stream.write(json.dumps(data) + '\n')
 
-base_env = dict(os.environ, DT_REPAIR_BUILD=str(BOX), DT_REPAIR_ROOT=str(SNAP))
+base_env = dict(os.environ, DT_BUILD_DIR=str(BOX), DT_SCRIPT_DIR=str(SNAP))
 record('job_start', job_id=os.environ['SLURM_JOB_ID'], node=os.environ.get('SLURMD_NODENAME'),
-       model_names=models.splitlines(), cpus=8, gpus=1, purpose='dT DNA-only periodic-image repair')
+       model_names=models.splitlines(), cpus=8, gpus=1,
+       purpose='dT DNA-only production in an enlarged periodic box')
 with (WORK / 'build.log').open('x') as stream:
     rc = subprocess.run(['/opt/bin/vmd', '-dispdev', 'text', '-e', str(SNAP / 'build.tcl')],
                         env=base_env, stdout=stream, stderr=subprocess.STDOUT).returncode

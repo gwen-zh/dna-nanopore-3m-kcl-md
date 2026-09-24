@@ -1,7 +1,7 @@
 # Preserve the extracted DNA PSF; only solvent and ions are rebuilt.
 proc build_box {} {
     global env
-    cd $env(DT_REPAIR_BUILD)
+    cd $env(DT_BUILD_DIR)
     if {[file exists system.psf] || [file exists solvated.psf]} {
         error "Refusing to overwrite an existing solvent build"
     }
@@ -10,7 +10,7 @@ proc build_box {} {
     package require autoionize
     expr {srand(9152026)}
     solvate dna.psf dna.pdb -minmax {{-90 -90 -90} {90 90 90}} -o solvated
-    # Retain the previous -sc 3.0 preparation convention. Actual NPT box
+    # Use the -sc 3.0 preparation convention. Actual NPT box
     # concentrations must be measured, not claimed to be exactly 3.000 M.
     autoionize -psf solvated.psf -pdb solvated.pdb \
         -sc 3.0 -cation POT -anion CLA -seg ION -from 5.0 -between 3.5 -o system

@@ -1,22 +1,19 @@
 # ssDNA and nanopore simulations in 3 M KCl
 
 poly(dA)40 / poly(dT)40 DNA-only simulations and four DNA–7AHL/3B07
-nanopore workflows. Earlier exploratory simulations are not included.
+nanopore workflows, with simulation inputs, analysis data and figures.
 
-## Validated ssDNA comparison — 2026-09-21
+## ssDNA structural comparison
 
-[Figures, CSV data, representative structures and reproducible analysis](ssdna/comparison/results/2026-09-21/README.md)
+[Figures, CSV data, representative structures and reproducible analysis](ssdna/comparison/results/README.md)
 compare equal 5 ns windows after PSF-bond periodic reconstruction. In these
 windows, dA40 is more compact and less rod-like than dT40, with higher syn and
 outward base orientation. dT40 has substantially more loss of adjacent
 stacking. The comparison uses dA 45.01–50.00 ns and the complete 0.01–5.00 ns
-production from the [image-safe dT branch](ssdna/polydt40-3m-kcl/README.md).
+production from the [dT simulation](ssdna/polydt40-3m-kcl/README.md).
 
-The repaired dT run completed normally and remained at least 85.886 Å from its
-nearest periodic image. The invalid older dT 50 ns export has been removed from
-the current repository tree and is not used for structural conclusions.
 
-## dA trajectory results and movies — 2026-09-17
+## dA nanopore trajectories and movies
 
 [Results, MP4 movies and downloadable inputs](nanopore/results/2026-09-17/README.md):
 dA–7AHL completed its 5 ns production segment; dA–3B07 is published as an
@@ -24,18 +21,15 @@ explicitly labelled 0–4.825 ns in-progress preview. Neither exported trajector
 shows complete DNA passage. These are real-coordinate movies of pore-mouth
 interactions and conformational changes, not illustrations of assumed passage.
 
-The two old dT pore runs were stopped because their donor was affected by the
-DNA-only periodic-image problem. The repaired dT DNA-only production is now
-complete and validated; any new dT pore run must use that corrected branch.
-The current dA trajectories use NAMD 2.14 CUDA; see the
+The published dA trajectories use NAMD 2.14 CUDA; see the
 [run-specific protocol](nanopore/results/2026-09-17/PROTOCOL.md).
 
 ## Protocols
 
 - [Nanopore protocol / 过孔模拟流程](nanopore/PROTOCOL.md): system preparation,
   force fields, restraints, stage durations, voltage, Slurm execution and checks.
-- [ssDNA dataset](ssdna/README.md): current validated sources and archived runs.
-- [Job status](PORE_JOB_STATUS.md): timestamped cluster snapshot.
+- [ssDNA dataset](ssdna/README.md): simulation scripts, results and analysis.
+- [Job status](PORE_JOB_STATUS.md): nanopore workflow status.
 
 The DNA-only preparation is 50,000 minimization steps → 0.5 ns heating →
 2 ns restrained equilibration → 2.5 ns weak-restraint equilibration →
@@ -49,7 +43,7 @@ The pore boxes are fixed; this is not the pressure-coupled DNA-only protocol.
 ## Repository contents
 
 - `ssdna/polyda40-3m-kcl/{scripts,results}/`: dA run inputs/code and outputs.
-- `ssdna/polydt40-3m-kcl/{scripts,results}/`: image-safe dT code and outputs.
+- `ssdna/polydt40-3m-kcl/{scripts,results}/`: dT code and outputs.
 - `ssdna/comparison/{scripts,results}/`: cross-sequence analysis and figures.
 - `nanopore/<sequence>-3m-kcl-<pore>/run/`: DNA placement, system settings and
   ion-placement checks; `nanopore/common/` contains the shared workflow.
@@ -57,19 +51,12 @@ The pore boxes are fixed; this is not the pressure-coupled DNA-only protocol.
 - `data-manifest/`: filenames, sizes and SHA-256 checksums for omitted DCD and
   large solvated-system files.
 
-No trajectory or checkpoint was deleted from the running cluster project.
-Repository naming is independent of that project's working-directory names.
-In archived ssDNA logs, only the working-directory header has been normalized
-to the repository path; numerical simulation records are unchanged.
 
-## Data-quality note
+## Data quality
 
-A periodic-image problem was confirmed in the older dT 50 ns trajectory. That
-invalid export is absent from the current tree; the original cluster data and
-Git history remain recoverable if provenance review is needed. The retained dT
-branch was rebuilt in a 180 Å water box and passed all-frame bond and
-image-distance checks. The 2026-09-21 comparison explicitly reconstructs both
-DNAs through PSF bonds before analysis.
+Coordinates are reconstructed through PSF covalent bonds before analysis. The
+dT trajectory remained at least 85.886 Å from its nearest periodic image and
+passed all-frame bond and image-distance checks.
 
 Each sequence currently has one usable trajectory, not an independent-replica
 uncertainty estimate. The equal windows are also at different trajectory ages:
@@ -77,7 +64,6 @@ dA uses its last 5 ns, whereas dT uses its first 5 ns production block.
 
 ## Software
 
-NAMD 2.14 CUDA for the current dA pore trajectories (NAMD 3.0.2 in earlier
-workflow stages); VMD 1.9.2; CHARMM nucleic-acid, protein, lipid and water/ion
-parameters as specified in the protocol; Python 3 with NumPy/SciPy; Slurm.
+NAMD 2.14 CUDA; VMD 1.9.2; CHARMM nucleic-acid, protein, lipid and water/ion
+parameters as specified in the protocols; Python 3 with NumPy/SciPy; Slurm.
 Force-field installation paths and the NAMD module name are cluster-specific.

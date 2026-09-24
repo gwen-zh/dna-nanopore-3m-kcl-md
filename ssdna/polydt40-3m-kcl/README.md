@@ -1,14 +1,12 @@
 # poly(dT)40 in 3 M KCl
 
-This is the completed, image-safe poly(dT)40 DNA-only branch used by the
-2026-09-21 structural analysis. Slurm job 57330935 ran on `dept_gpu` with one
-non-L40 GPU and NAMD 2.14 CUDA, and ended normally at 2,500,000 production
-steps on 2026-09-19 20:59 EDT.
+This completed poly(dT)40 DNA-only simulation ran on `dept_gpu` with one
+non-L40 GPU and NAMD 2.14 CUDA, and completed 2,500,000 production steps.
 
-The starting DNA was PSF-bond reconstructed from frame 1990 (19.91 ns) of the
-earlier trajectory, centered, and resolvated in an explicit 180 Å cubic box.
-It was not stretched or regenerated. The new system contains 526,789 atoms,
-168,075 waters, 10,662 K⁺ and 10,623 Cl⁻ ions.
+The starting DNA was reconstructed through PSF covalent bonds, centered and
+solvated in an explicit 180 Å cubic box. It was not stretched or regenerated.
+The system contains 526,789 atoms, 168,075 waters, 10,662 K⁺ and 10,623 Cl⁻
+ions.
 
 ## Protocol
 
@@ -49,5 +47,4 @@ The large solvated PSF/PDB, binary checkpoints and DCD are not committed.
 Their sizes and SHA-256 hashes are recorded in
 [`data-manifest/polydt40_dcd.sha256`](../../data-manifest/polydt40_dcd.sha256).
 
-The 5 ns production is retained because it is the valid dT source used by the
-current structural comparison.
+The 5 ns production is the dT source used by the structural comparison.

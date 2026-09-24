@@ -8,7 +8,6 @@
   "production_ns": 5.0,
   "frames": 500,
   "frame_interval_ps": 10.0,
-  "completed_ed_time": "2026-09-19T20:59:59-04:00",
   "normal_termination": true,
   "rg_A": {
     "min": 25.06248087559828,

@@ -9,7 +9,7 @@ import numpy as np
 from scipy.spatial import cKDTree
 
 ROOT = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT.parent / 'ssdna-analysis-20260911'))
+sys.path.insert(0, str(ROOT.parents[2] / 'nanopore' / 'analysis'))
 from analyze import read_psf, traversal, join, minimum_image
 
 IMAGE_STOP_A = 24.0  # 12 A cutoff plus 12 A precautionary margin, not a force.

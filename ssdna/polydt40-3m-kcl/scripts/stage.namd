@@ -1,9 +1,9 @@
-cd $env(DT_REPAIR_BUILD)
+cd $env(DT_BUILD_DIR)
 structure system.psf
 coordinates system.pdb
 outputName $env(OUTPUT_PREFIX)
 firsttimestep 0
-source $env(DT_REPAIR_ROOT)/common.namd
+source $env(DT_SCRIPT_DIR)/common.namd
 set mode $env(STAGE_MODE)
 if {$mode eq "min"} {
     temperature 50
@@ -32,7 +32,7 @@ if {$env(RESTRAINT_SCALE) > 0} {
 if {$mode eq "min"} {
     minimize $env(STAGE_STEPS)
 } elseif {$mode eq "heat"} {
-    # Same 50 -> 293 K, 0.5 ns schedule as the previous DNA-only protocol.
+    # 50 -> 293 K over the 0.5 ns DNA-only heating stage.
     reassignFreq 1000
     reassignTemp 50
     reassignIncr 1.0

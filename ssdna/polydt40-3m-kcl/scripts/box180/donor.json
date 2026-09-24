@@ -1,6 +1,6 @@
 {
-  "source_psf": "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/polydt40-3m-kcl/formal-10ns/system.psf",
-  "source_dcd": "/net/galaxy/home/koes/zhangwen/ahl+3M-20-dA5/polydt40-3m-kcl/formal-10ns/prod20.dcd",
+  "source_psf": "poly(dT)40 source system",
+  "source_dcd": "poly(dT)40 20 ns source trajectory",
   "source_frame_zero_based": 1990,
   "source_time_ns": 19.91,
   "selection_rule": "Fixed last 0.1-ns analysis sample before 20 ns; not selected for compactness or a desired dA/dT ordering",
