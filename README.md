@@ -6,11 +6,11 @@ nanopore workflows, with simulation inputs, analysis data and figures.
 ## ssDNA structural comparison
 
 [Figures, CSV data, representative structures and reproducible analysis](ssdna/comparison/results/README.md)
-compare equal 5 ns windows after PSF-bond periodic reconstruction. In these
-windows, dA40 is more compact and less rod-like than dT40, with higher syn and
-outward base orientation. dT40 has substantially more loss of adjacent
-stacking. The comparison uses dA 45.01–50.00 ns and the complete 0.01–5.00 ns
-production from the [dT simulation](ssdna/polydt40-3m-kcl/README.md).
+compare matched 0.01–5.00 ns production windows after PSF-bond periodic
+reconstruction. In this early-production window, dA40 is larger and more
+rod-like but retains much more adjacent base stacking and has higher syn
+occupancy. dT40 is more globally folded, has more nonlocal contacts and shows
+substantially greater loss of adjacent stacking.
 
 
 ## dA nanopore trajectories and movies
@@ -59,8 +59,9 @@ dT trajectory remained at least 85.886 Å from its nearest periodic image and
 passed all-frame bond and image-distance checks.
 
 Each sequence currently has one usable trajectory, not an independent-replica
-uncertainty estimate. The equal windows are also at different trajectory ages:
-dA uses its last 5 ns, whereas dT uses its first 5 ns production block.
+uncertainty estimate. Both windows cover the same production age
+(0.01–5.00 ns), so the comparison is matched in duration and trajectory age
+but does not establish long-time convergence.
 
 ## Software
 

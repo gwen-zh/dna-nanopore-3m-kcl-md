@@ -2,28 +2,28 @@
   "dA40": {
     "sequence": "poly(dA)40",
     "label": "dA40",
-    "psf": "poly(dA)40 production system",
-    "dcd": "poly(dA)40 20–50 ns production trajectory",
-    "total_DCD_frames": 3000,
+    "psf": "dA40_system.psf",
+    "dcd": "dA40_production.dcd",
+    "total_DCD_frames": 2000,
     "analyzed_frames": 500,
     "selected_frame_range_zero_based": [
-      2500,
-      2999
+      0,
+      499
     ],
     "source_time_range_ns": [
-      45.01,
-      50.0
+      0.01,
+      5.0
     ],
     "analyzed_window_ns": 5.0,
-    "maximum_DNA_bond_A": 1.7071882718810618,
-    "representative_frame_zero_based": 2737,
-    "representative_source_time_ns": 47.379999999999995
+    "maximum_DNA_bond_A": 1.7166584869097363,
+    "representative_frame_zero_based": 183,
+    "representative_source_time_ns": 1.8399999999999999
   },
   "dT40": {
     "sequence": "poly(dT)40",
     "label": "dT40",
-    "psf": "poly(dT)40 production system",
-    "dcd": "poly(dT)40 5 ns production trajectory",
+    "psf": "dT40_system.psf",
+    "dcd": "dT40_production.dcd",
     "total_DCD_frames": 500,
     "analyzed_frames": 500,
     "selected_frame_range_zero_based": [
@@ -39,11 +39,11 @@
     "representative_frame_zero_based": 59,
     "representative_source_time_ns": 0.6
   },
-  "method": "PSF-bond reconstruction; equal 5 ns windows; frame statistics are descriptive, not independent-replica uncertainty",
+  "method": "PSF-bond reconstruction; matched 0.01\u20135.00 ns production windows; frame statistics are descriptive",
   "input_sha256": {
     "dA40_system.psf": "612d66d80624ed53b6daf81e12cdbe69348477512eec6d76b5a10c45ee21ee52",
-    "dA40_prod20to50.dcd": "060826292d638fb814527537f7a95c765f5fef990be7d1f52b13efe7c78ea90f",
+    "dA40_production.dcd": "53018430d7fce4299cdae1f8182d2f1ad94e7ad1cfef252ae796b96b2c23c233",
     "dT40_system.psf": "a0d6451fda52af6c23f9b5072ec1f34eb605b041ee902ea627c43e166f1a6c90",
-    "dT40_prod5.dcd": "a43acd0eadd08328db1511989b98b898b238e149bdc1d38f0439c1d38e49e307"
+    "dT40_production.dcd": "a43acd0eadd08328db1511989b98b898b238e149bdc1d38f0439c1d38e49e307"
   }
 }

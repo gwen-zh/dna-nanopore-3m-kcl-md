@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Equal-window structural analysis for dA40 and dT40.
+"""Matched-age 5 ns structural analysis for dA40 and dT40.
 
-The comparison uses the 45.01–50.00 ns window of the dA trajectory and the
-complete 5 ns dT production block. Coordinates are reconstructed through PSF
-bonds before any molecular geometry is measured.
+Both sequences use the 0.01–5.00 ns production window after the same heating
+and equilibration schedule. Coordinates are reconstructed through PSF bonds
+before any molecular geometry is measured.
 """
 import argparse
 import collections
@@ -121,7 +121,7 @@ def circular_mean_deg(values,axis=0):
     return np.rad2deg(np.arctan2(np.nanmean(np.sin(rad),axis=axis),np.nanmean(np.cos(rad),axis=axis)))
 
 
-def source_setup(label,psf,dcd_path,frames):
+def source_setup(label,psf,dcd_path,frames,start_frame):
     atoms,bonds=read_psf(psf)
     dna_ids=atoms.index[atoms.resname.isin(['ADE','THY'])].to_numpy()
     if len(dna_ids)!=1279 or not np.array_equal(dna_ids,np.arange(1279)):
@@ -131,8 +131,9 @@ def source_setup(label,psf,dcd_path,frames):
     dbonds=bonds[np.all(np.isin(bonds,dna_ids),axis=1)]
     edges=traversal(len(dna),dbonds)
     dcd=DCD(dcd_path)
-    if dcd.natoms!=len(atoms) or frames>dcd.nframes:raise ValueError(label+': incompatible DCD')
-    selected=np.arange(dcd.nframes-frames,dcd.nframes)
+    if dcd.natoms!=len(atoms) or start_frame<0 or start_frame+frames>dcd.nframes:
+        raise ValueError(label+': incompatible DCD or frame window')
+    selected=np.arange(start_frame,start_frame+frames)
     return dict(label=label,psf=Path(psf),dcd=dcd,dcd_path=Path(dcd_path),atoms=atoms,dna=dna,
                 dna_ids=dna_ids,dbonds=dbonds,edges=edges,selected=selected)
 
@@ -243,7 +244,7 @@ def analyze_one(info,out,environment_stride=10):
                             base_normal_backbone_mean_deg=group.base_normal_backbone_deg.mean(),
                             chi_circular_mean_deg=circular_mean_deg(group.chi_deg.to_numpy()),
                             nonlocal_contact_mean=group.nonlocal_contact_count.mean(),C1_RMSF_A=rmsf[r-1]))
-    validation=dict(sequence=sequence,label=label,psf=str(info['psf'].resolve()),dcd=str(info['dcd_path'].resolve()),
+    validation=dict(sequence=sequence,label=label,psf=f'{label}_system.psf',dcd=f'{label}_production.dcd',
                     total_DCD_frames=int(info['dcd'].nframes),analyzed_frames=len(selected),
                     selected_frame_range_zero_based=[int(selected[0]),int(selected[-1])],
                     source_time_range_ns=[float(source_times[0]),float(source_times[-1])],
@@ -325,10 +326,12 @@ def main():
     parser.add_argument('--da-psf',type=Path,required=True);parser.add_argument('--da-dcd',type=Path,required=True)
     parser.add_argument('--dt-psf',type=Path,required=True);parser.add_argument('--dt-dcd',type=Path,required=True)
     parser.add_argument('--frames',type=int,default=500)
+    parser.add_argument('--da-start-frame',type=int,default=0)
+    parser.add_argument('--dt-start-frame',type=int,default=0)
     parser.add_argument('--out',type=Path,default=Path(__file__).resolve().parent.parent/'results')
     args=parser.parse_args();args.out.mkdir(parents=True,exist_ok=True)
-    setups={'dA40':source_setup('dA40',args.da_psf,args.da_dcd,args.frames),
-            'dT40':source_setup('dT40',args.dt_psf,args.dt_dcd,args.frames)}
+    setups={'dA40':source_setup('dA40',args.da_psf,args.da_dcd,args.frames,args.da_start_frame),
+            'dT40':source_setup('dT40',args.dt_psf,args.dt_dcd,args.frames,args.dt_start_frame)}
     results={label:analyze_one(info,args.out) for label,info in setups.items()}
     pd.concat([result['frame'] for result in results.values()]).to_csv(args.out/'timeseries.csv',index=False,float_format='%.8g')
     pd.concat([result['local'] for result in results.values()]).to_csv(args.out/'per_residue_timeseries.csv',index=False,float_format='%.8g')
@@ -350,8 +353,13 @@ def main():
     numeric=[c for c in blocks.columns if c not in {'sequence','window_time_ns','source_time_ns','block_0p5ns'}]
     blocks.groupby(['sequence','block_0p5ns'])[numeric].mean().reset_index().to_csv(args.out/'block_means_0p5ns.csv',index=False,float_format='%.8g')
     validation={label:result['validation'] for label,result in results.items()}
-    validation['method']='PSF-bond reconstruction; equal 5 ns windows; frame statistics are descriptive, not independent-replica uncertainty'
-    validation['input_sha256']={str(path.resolve()):sha256(path) for path in [args.da_psf,args.da_dcd,args.dt_psf,args.dt_dcd]}
+    validation['method']='PSF-bond reconstruction; matched 0.01–5.00 ns production windows; frame statistics are descriptive'
+    validation['input_sha256']={
+        'dA40_system.psf':sha256(args.da_psf),
+        'dA40_production.dcd':sha256(args.da_dcd),
+        'dT40_system.psf':sha256(args.dt_psf),
+        'dT40_production.dcd':sha256(args.dt_dcd),
+    }
     (args.out/'validation.json').write_text(json.dumps(validation,indent=2)+'\n')
     plot_all(results,args.out)
     print(summary.to_string(index=False),flush=True)

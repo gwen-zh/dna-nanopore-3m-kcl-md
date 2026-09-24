@@ -6,5 +6,5 @@
   50 ns simulation.
 
 The production trajectory is 50 ns at 293 K and 1.01325 bar with a 2 fs
-timestep. The validated dA40/dT40 comparison uses its 45.01–50.00 ns window and
+timestep. The dA40/dT40 comparison uses its 0.01–5.00 ns window and
 is stored under [`../comparison/results/`](../comparison/results/README.md).
