@@ -58,7 +58,7 @@ mean outward projection is close to zero for both sequences, so syn occupancy
 is the stronger distinction in this matched window and should not be treated
 as synonymous with loss of stacking.
 
-Within the first 5 ns, dA40 is already moving toward compaction: its 0.5 ns
+Within the 5 ns, dA40 is already moving toward compaction: its 0.5 ns
 block-mean Rg decreases from 36.54 to 32.65 Å and its end-to-end distance from
 87.07 to 70.27 Å. The present comparison therefore describes an early
 relaxation window, not a converged long-time ensemble.
