@@ -125,10 +125,3 @@ so no short-range periodic-image contact occurs.
 - [`../../scripts/analyze_equal_window.py`](../../scripts/analyze_equal_window.py):
   standalone Python analysis and plotting source.
 
-## Interpretation
-
-The comparison uses matched 0.01–5.00 ns production windows for both
-sequences. Each sequence is represented by one trajectory, so the reported
-variation describes frames within these early trajectories. Independent
-replicas and longer matched sampling would be required to estimate
-population-level uncertainty, convergence or free-energy differences.
