@@ -34,6 +34,4 @@ The validated comparison uses 500 frames per sequence after PSF-bond
 reconstruction, with both sequences sampled over the matched 0.01–5.00 ns
 production window. It covers Rg, end-to-end and contour lengths, shape,
 stacking, χ/syn occupancy, outward base orientation, contacts, hydrogen bonds,
-RMSF, ion association and hydration. There is one usable trajectory per
-sequence, so frame variability is descriptive rather than
-independent-replica uncertainty.
+RMSF, ion association and hydration.
