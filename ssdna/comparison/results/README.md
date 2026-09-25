@@ -7,7 +7,7 @@ reconstructed through PSF covalent bonds before any molecular geometry is measur
 
 | Sequence | Trajectory used | Frames | Source time | Window length |
 |---|---|---:|---:|---:|
-| poly(dA)40 | 50 ns production | 0–499 | 0.01–5.00 ns | 5.00 ns |
+| poly(dA)40 | 5 ns production | 0–499 | 0.01–5.00 ns | 5.00 ns |
 | poly(dT)40 | 5 ns production | 0–499 | 0.01–5.00 ns | 5.00 ns |
 
 Both DCDs contain one frame every 10 ps. Both trajectories followed 0.5 ns
