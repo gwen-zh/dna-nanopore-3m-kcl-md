@@ -23,8 +23,7 @@ analysis is visible directly from the ssDNA page.
 
 The common preparation is 50,000 minimization steps, 0.5 ns heating, 2 ns
 restrained equilibration, 2.5 ns weak-restraint equilibration and 5 ns
-unrestrained equilibration, with a 2 fs timestep at 293 K. dA has 50 ns
-production. The dT dataset has one 5 ns production block after the same
+unrestrained equilibration, with a 2 fs timestep at 293 K. Both dA and dT dataset have one 5 ns production block after the same
 preparation schedule.
 
 Large omitted trajectories are recorded in
