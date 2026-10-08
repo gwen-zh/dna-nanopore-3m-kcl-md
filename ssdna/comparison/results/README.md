@@ -45,11 +45,6 @@ reported separately because no single observable alone defines base flipping.
 
 ![Representative structures](07_representative_structures.png)
 
-Each figure is also provided as a PDF. `summary.csv`, `timeseries.csv`,
-`per_residue_summary.csv`, `per_residue_timeseries.csv`, occupancy matrices,
-environment contacts and representative sampled PDB structures contain the
-underlying values. [`pymol-display/`](pymol-display/README.md) contains an
-interactive PyMOL session and rendered structures.
 
 ## Definitions
 
