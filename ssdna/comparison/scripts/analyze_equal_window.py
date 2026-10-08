@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Matched-age 5 ns structural analysis for dA40 and dT40.
+"""Matched 5 ns structural analysis for dA40 and dT40.
 
-Both sequences use the 0.01–5.00 ns production window after the same heating
-and equilibration schedule. Coordinates are reconstructed through PSF bonds
-before any molecular geometry is measured.
+Frame windows are selected explicitly on the command line. Coordinates are
+reconstructed through PSF bonds before any molecular geometry is measured.
 """
 import argparse
 import collections
@@ -353,7 +352,11 @@ def main():
     numeric=[c for c in blocks.columns if c not in {'sequence','window_time_ns','source_time_ns','block_0p5ns'}]
     blocks.groupby(['sequence','block_0p5ns'])[numeric].mean().reset_index().to_csv(args.out/'block_means_0p5ns.csv',index=False,float_format='%.8g')
     validation={label:result['validation'] for label,result in results.items()}
-    validation['method']='PSF-bond reconstruction; matched 0.01–5.00 ns production windows; frame statistics are descriptive'
+    ranges={label:result['validation']['source_time_range_ns'] for label,result in results.items()}
+    validation['method']=(
+        'PSF-bond reconstruction; explicitly selected matched 5 ns production '
+        f'windows ({ranges}); frame statistics are descriptive'
+    )
     validation['input_sha256']={
         'dA40_system.psf':sha256(args.da_psf),
         'dA40_production.dcd':sha256(args.da_dcd),

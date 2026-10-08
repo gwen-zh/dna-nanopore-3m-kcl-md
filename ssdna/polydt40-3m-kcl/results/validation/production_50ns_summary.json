@@ -1,0 +1,56 @@
+{
+  "production_ns": 50.0,
+  "frames": 5000,
+  "frame_interval_ps": 10.0,
+  "first_time_ns": 0.01,
+  "last_time_ns": 50.0,
+  "maximum_DNA_bond_A": 1.7372787659716131,
+  "minimum_periodic_image_A": 85.4925081314432,
+  "endpoint": {
+    "production_step": 25000000.0,
+    "production_time_ns": 50.0,
+    "rg_A": 15.772502372792326,
+    "end_to_end_A": 28.15818446104656,
+    "dna_max_bond_A": 1.6725450748312167,
+    "nearest_periodic_image_A": 125.43146427831886,
+    "box_x_A": 175.4702571987485,
+    "box_y_A": 175.4702571987485,
+    "box_z_A": 175.4702571987485,
+    "K_box_molar": 3.277006009644032,
+    "Cl_box_molar": 3.265019212197388,
+    "block_5ns": 10.0
+  },
+  "late_45_50ns_mean": {
+    "rg_A": 17.126898559902255,
+    "end_to_end_A": 37.441179676305055,
+    "dna_max_bond_A": 1.651845684621762,
+    "nearest_periodic_image_A": 129.59578056723797,
+    "box_x_A": 175.45592082736113,
+    "box_y_A": 175.45592082736113,
+    "box_z_A": 175.45592082736113,
+    "K_box_molar": 3.2778099239292184,
+    "Cl_box_molar": 3.265820185884458
+  },
+  "dcd_segments": [
+    {
+      "name": "prod5.dcd",
+      "bytes": 3160774276,
+      "sha256": "a43acd0eadd08328db1511989b98b898b238e149bdc1d38f0439c1d38e49e307"
+    },
+    {
+      "name": "prod20.dcd",
+      "bytes": 9482322276,
+      "sha256": "506245eba4a9c81dc404c754052593cb42087c2047b3a28440beab0005aa43fc"
+    },
+    {
+      "name": "prod35.dcd",
+      "bytes": 9482322276,
+      "sha256": "9a384ebdb878e8907e5b592d29975aa19338d2a4c9ed5b3ca74c244e321fe41a"
+    },
+    {
+      "name": "prod50.dcd",
+      "bytes": 9482322276,
+      "sha256": "7541bdb9940936af99f6e81ec049682a8ff38a28a7223e3e5b07a61564e33a54"
+    }
+  ]
+}

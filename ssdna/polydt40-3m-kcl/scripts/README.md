@@ -1,9 +1,6 @@
 # poly(dT)40 scripts
 
-This directory contains the exact code snapshot used to prepare and simulate
-the dT system. `box180/` contains the DNA donor and the water/ion parameter
-supplement; the large solvated system is omitted.
-
-`code_sha256.json` records the hashes of the executed job files. The scripts
-retain their original cluster paths as provenance; they are not rewritten to
-pretend that the GitHub checkout was the execution directory.
+This directory contains the production driver, NAMD configuration, geometry
+checks and retained preparation assets for the 50 ns dataset. `code_sha256.json`
+records hashes of the published executable files. Large solvated-system files
+and trajectories are listed in the data manifest rather than committed.

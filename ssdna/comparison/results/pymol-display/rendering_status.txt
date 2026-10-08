@@ -1,0 +1,5 @@
+Automated PyMOL rendering was unavailable on the publication node.
+The sampled PDB structures and show_representatives.pml are complete and can
+be rendered on a host with a working PyMOL installation.
+
+Exception: CalledProcessError: Command '['pymol', '-cq', 'show_representatives.pml']' returned non-zero exit status 1.

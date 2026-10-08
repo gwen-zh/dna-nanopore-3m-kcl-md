@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""One GPU, preserved DNA topology, original preparation then a gated 5 ns block."""
+"""Extend the validated 5 ns dT40 3 M KCl production to 50 ns."""
+import argparse
 import csv
 import hashlib
 import json
@@ -7,123 +8,307 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from checks import Checker, live_dna_frames
 
 ROOT = Path(__file__).resolve().parent
-BOX = ROOT / 'box180'
-NAMD = '/opt/NAMD/NAMD_2.14_Linux-x86_64-multicore-CUDA/namd2'
-assert os.environ['SLURM_JOB_PARTITION'] == 'dept_gpu'
-assert int(os.environ['SLURM_CPUS_PER_TASK']) == 8
-models = subprocess.check_output(['nvidia-smi', '--query-gpu=name', '--format=csv,noheader'], text=True)
-assert not re.search(r'\bL40', models, re.I)
-WORK = ROOT / ('run-' + os.environ['SLURM_JOB_ID'])
-WORK.mkdir(exist_ok=False)
-SNAP = WORK / 'code-snapshot'
-SNAP.mkdir()
-hashes = {}
-for name in ['run.py', 'checks.py', 'common.namd', 'stage.namd', 'build.tcl', 'run.sbatch']:
-    shutil.copyfile(ROOT / name, SNAP / name)
-    hashes[name] = hashlib.sha256((SNAP / name).read_bytes()).hexdigest()
-(WORK / 'code_sha256.json').write_text(json.dumps(hashes, indent=2) + '\n')
+WORKSPACE = ROOT.parent
+DT_ROOT = WORKSPACE / "dt-image-repair-20260915"
+BOX = DT_ROOT / "box180"
+SOURCE = DT_ROOT / "run-57330935/prod5"
+NAMD = "/opt/NAMD/NAMD_2.14_Linux-x86_64-multicore-CUDA/namd2"
+DCD_STRIDE = 5000
 
-def record(event, **fields):
-    data = {'utc': datetime.now(timezone.utc).isoformat(), 'event': event, **fields}
-    print(json.dumps(data), flush=True)
-    with (WORK / 'events.jsonl').open('a') as stream:
-        stream.write(json.dumps(data) + '\n')
+sys.path.insert(0, str(DT_ROOT))
+from checks import Checker, live_dna_frames  # noqa: E402
 
-base_env = dict(os.environ, DT_BUILD_DIR=str(BOX), DT_SCRIPT_DIR=str(SNAP))
-record('job_start', job_id=os.environ['SLURM_JOB_ID'], node=os.environ.get('SLURMD_NODENAME'),
-       model_names=models.splitlines(), cpus=8, gpus=1,
-       purpose='dT DNA-only production in an enlarged periodic box')
-with (WORK / 'build.log').open('x') as stream:
-    rc = subprocess.run(['/opt/bin/vmd', '-dispdev', 'text', '-e', str(SNAP / 'build.tcl')],
-                        env=base_env, stdout=stream, stderr=subprocess.STDOUT).returncode
-build_log = (WORK / 'build.log').read_text(errors='replace')
-if rc != 0 or 'BUILD_COMPLETE' not in build_log or 'BUILD_FAILED' in build_log:
-    raise RuntimeError('Solvent build failed; outputs retained, MD not started')
-checker = Checker(BOX)
-initial = checker.initial()
-(WORK / 'build_validation.json').write_text(json.dumps(initial, indent=2) + '\n')
-record('build_validated', metrics=initial)
 
-def terminate_own_process(proc):
-    proc.terminate()
+CHUNKS = [
+    dict(label="prod20", start_step=2_500_000, run_steps=7_500_000,
+         final_step=10_000_000, final_time_ns=20.0, seed="202609273"),
+    dict(label="prod35", start_step=10_000_000, run_steps=7_500_000,
+         final_step=17_500_000, final_time_ns=35.0, seed="202609274"),
+    dict(label="prod50", start_step=17_500_000, run_steps=7_500_000,
+         final_step=25_000_000, final_time_ns=50.0, seed="202609275"),
+]
+
+
+def sha256(path):
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for block in iter(lambda: stream.read(1_048_576), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def write_json(path, value):
+    Path(path).write_text(json.dumps(value, indent=2) + "\n")
+
+
+def record(work, label, **fields):
+    value = dict(utc=datetime.now(timezone.utc).isoformat(), event=label, **fields)
+    with (work / "events.jsonl").open("a") as stream:
+        stream.write(json.dumps(value) + "\n")
+    print(json.dumps(value), flush=True)
+
+
+def terminate_own_process(process):
+    process.terminate()
     try:
-        proc.wait(timeout=30)
+        process.wait(timeout=30)
     except subprocess.TimeoutExpired:
-        proc.kill()
-        proc.wait()
+        process.kill()
+        process.wait()
 
-def stage(label, source, mode, steps, scale):
-    prefix = WORK / label
-    env = dict(base_env, OUTPUT_PREFIX=str(prefix), INPUT_PREFIX=str(source or ''),
-               STAGE_MODE=mode, STAGE_STEPS=str(steps), RESTRAINT_SCALE=str(scale))
-    record('stage_start', stage=label, mode=mode, steps=steps, timestep_fs=2,
-           restraint_scale=scale, input=str(source), output=str(prefix), field=False, threads=8)
+
+def validate_allocation():
+    if os.environ.get("SLURM_JOB_PARTITION") != "dept_gpu":
+        raise RuntimeError("Only dept_gpu is authorized")
+    if int(os.environ.get("SLURM_CPUS_PER_TASK", "0")) != 8:
+        raise RuntimeError("Exactly 8 CPU workers are required")
+    models = subprocess.check_output(
+        ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"], text=True
+    ).splitlines()
+    if not models or any(re.search(r"\bL40", model, re.I) for model in models):
+        raise RuntimeError("A visible L40 GPU is not authorized")
+    return models
+
+
+def run_chunk(work, checker, source, chunk):
+    label = chunk["label"]
+    source_validation = checker.restart(source)
+    if source_validation["stage_step"] != chunk["start_step"]:
+        raise RuntimeError(
+            f"{label}: source step {source_validation['stage_step']} does not match "
+            f"expected {chunk['start_step']}"
+        )
+    output = work / label
+    env = dict(
+        os.environ,
+        DT_BOX=str(BOX),
+        CODE_DIR=str(ROOT),
+        INPUT_PREFIX=str(source),
+        OUTPUT_PREFIX=str(output),
+        START_STEP=str(chunk["start_step"]),
+        RUN_STEPS=str(chunk["run_steps"]),
+        MD_SEED=chunk["seed"],
+        OPENBLAS_NUM_THREADS="1",
+        OMP_NUM_THREADS="1",
+    )
+    record(
+        work,
+        "stage_start",
+        stage=label,
+        source=str(source),
+        source_validation=source_validation,
+        start_step=chunk["start_step"],
+        run_steps=chunk["run_steps"],
+        final_step=chunk["final_step"],
+        final_time_ns=chunk["final_time_ns"],
+        timestep_fs=2,
+        temperature_K=293,
+        pressure_bar=1.01325,
+        field=False,
+        restraints=False,
+    )
+
     seen = 0
-    with (WORK / f'{label}.metrics.csv').open('x', newline='') as metric_stream, \
-         (WORK / f'{label}.log').open('x') as log:
+    minimum_image_gap = float("inf")
+    first = None
+    last = None
+    with (work / f"{label}.metrics.csv").open("x", newline="") as metric_stream, \
+            (work / f"{label}.log").open("x") as log:
         writer = None
 
         def audit(strict=False):
-            nonlocal seen, writer
+            nonlocal seen, minimum_image_gap, first, last, writer
             try:
-                for index, step, xyz, box in live_dna_frames(str(prefix) + '.dcd', checker.n, 1279, seen, strict):
-                    row = {'stage_step': step, 'stage_time_ns': step * 2e-6,
-                           **checker.dna_metrics(xyz, box)}
+                for index, step, xyz, box in live_dna_frames(
+                    str(output) + ".dcd", checker.n, 1279, seen, strict
+                ):
+                    expected_step = chunk["start_step"] + (index + 1) * DCD_STRIDE
+                    if step != expected_step:
+                        raise ValueError(
+                            f"{label}: DCD step {step} does not match {expected_step}"
+                        )
+                    row = dict(
+                        production_step=step,
+                        production_time_ns=step * 2e-6,
+                        **checker.dna_metrics(xyz, box),
+                    )
                     if writer is None:
                         writer = csv.DictWriter(metric_stream, fieldnames=list(row))
                         writer.writeheader()
                     writer.writerow(row)
                     metric_stream.flush()
                     seen = index + 1
-                    if row['nearest_periodic_image_A'] < 36 or seen % 50 == 0:
-                        record('periodic_guard_pass', stage=label, frame_count=seen, metrics=row)
+                    first = first or row
+                    last = row
+                    minimum_image_gap = min(
+                        minimum_image_gap, row["nearest_periodic_image_A"]
+                    )
+                    if seen % 50 == 0:
+                        record(
+                            work,
+                            "periodic_guard_pass",
+                            stage=label,
+                            frame_count=seen,
+                            metrics=row,
+                        )
             except EOFError:
                 if strict:
                     raise
 
-        proc = subprocess.Popen([NAMD, '+p8', '+devices', '0', '+idlepoll', str(SNAP / 'stage.namd')],
-                                env=env, stdout=log, stderr=subprocess.STDOUT)
+        process = subprocess.Popen(
+            [NAMD, "+p8", "+devices", "0", "+idlepoll", str(ROOT / "stage.namd")],
+            env=env,
+            stdout=log,
+            stderr=subprocess.STDOUT,
+        )
         try:
-            while proc.poll() is None:
-                if mode != 'min':
-                    audit()
+            while process.poll() is None:
+                audit()
                 time.sleep(5)
-            if mode != 'min':
-                audit(strict=True)
-                if seen != steps // 5000:
-                    raise ValueError(f'Missing DCD frames: {seen}, expected {steps // 5000}')
+            audit(strict=True)
         except BaseException as exc:
-            if proc.poll() is None:
-                terminate_own_process(proc)
-            record('stage_stopped_by_guard', stage=label, reason=str(exc))
+            if process.poll() is None:
+                terminate_own_process(process)
+            record(work, "stage_stopped_by_guard", stage=label, reason=str(exc))
             raise
-    text = (WORK / f'{label}.log').read_text(errors='replace')
-    if proc.returncode != 0 or 'End of program' not in text or re.search(r'FATAL ERROR|\bnan\b', text, re.I):
-        record('stage_failed', stage=label, returncode=proc.returncode)
-        raise RuntimeError('NAMD failed; no single-thread fallback or automatic unsafe continuation')
-    if not re.search(rf'^ENERGY:\s+{steps}\s', text, re.M):
-        raise RuntimeError('Expected final ENERGY step missing')
-    metrics = checker.restart(prefix)
-    if metrics['stage_step'] != steps:
-        raise RuntimeError('Final restart step mismatch')
-    (WORK / f'{label}.validation.json').write_text(json.dumps(metrics, indent=2) + '\n')
-    record('stage_complete', stage=label, audited_frames=seen, metrics=metrics)
-    return prefix
 
-# Match the existing preparation: 50k min, 0.5 ns heat, then 2+2.5+5 ns equil.
-source = None
-for label, mode, steps, scale in [
-    ('min', 'min', 50000, 1.0), ('heat', 'heat', 250000, 1.0),
-    ('eq1', 'md', 1000000, .5), ('eq2', 'md', 1250000, .1),
-    ('eq3', 'md', 2500000, 0), ('prod5', 'md', 2500000, 0),
-]:
-    source = stage(label, source, mode, steps, scale)
-record('first_sampling_block_complete', production_ns=5, production_prefix=str(source),
-       donor_ready=False, next_action='Review image clearance, salt density and conformational drift before extending sampling or selecting new pore donors')
+    text = (work / f"{label}.log").read_text(errors="replace")
+    if (process.returncode != 0 or "End of program" not in text or
+            re.search(r"FATAL ERROR|\bnan\b", text, re.I)):
+        raise RuntimeError(f"NAMD failed during {label}")
+    if not re.search(rf"^ENERGY:\s+{chunk['final_step']}\s", text, re.M):
+        raise RuntimeError(f"{label}: final ENERGY record is missing")
+    expected_frames = chunk["run_steps"] // DCD_STRIDE
+    if seen != expected_frames or first is None or last is None:
+        raise RuntimeError(
+            f"{label}: expected {expected_frames} DCD frames, found {seen}"
+        )
+    restart_validation = checker.restart(output)
+    if restart_validation["stage_step"] != chunk["final_step"]:
+        raise RuntimeError(f"{label}: final restart step mismatch")
+    result = dict(
+        stage=label,
+        source=str(source),
+        output_prefix=str(output),
+        frames=seen,
+        first=first,
+        endpoint=last,
+        minimum_periodic_image_A=minimum_image_gap,
+        restart_validation=restart_validation,
+        final_production_time_ns=chunk["final_time_ns"],
+    )
+    write_json(work / f"{label}.validation.json", result)
+    record(work, "stage_complete", **result)
+    return output, result
+
+
+def preflight(checker):
+    source_validation = checker.restart(SOURCE)
+    if source_validation["stage_step"] != 2_500_000:
+        raise RuntimeError("The retained dT checkpoint is not the 5 ns endpoint")
+    if source_validation["nearest_periodic_image_A"] <= 24:
+        raise RuntimeError("The retained dT checkpoint fails the periodic-image gate")
+    return dict(
+        system="poly(dT)40 in 3 M KCl, explicit 180 A periodic box",
+        source=str(SOURCE.relative_to(WORKSPACE)),
+        source_validation=source_validation,
+        existing_production_ns=5,
+        additional_steps=22_500_000,
+        additional_ns=45,
+        final_production_ns=50,
+        timestep_fs=2,
+        chunks=CHUNKS,
+    )
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--check-only", action="store_true")
+    args = parser.parse_args()
+    checker = Checker(BOX)
+    plan = preflight(checker)
+    if args.check_only:
+        print(json.dumps(plan, indent=2))
+        return
+
+    models = validate_allocation()
+    work = ROOT / ("run-" + os.environ["SLURM_JOB_ID"])
+    work.mkdir(exist_ok=False)
+    snapshot = work / "code-snapshot"
+    snapshot.mkdir()
+    for name in ["README.md", "common.namd", "stage.namd", "run.py", "run.sbatch"]:
+        shutil.copyfile(ROOT / name, snapshot / name)
+
+    manifest_files = [
+        ROOT / "common.namd",
+        ROOT / "stage.namd",
+        ROOT / "run.py",
+        ROOT / "run.sbatch",
+        DT_ROOT / "checks.py",
+        BOX / "system.psf",
+        BOX / "system.pdb",
+        BOX / "dna.psf",
+        BOX / "restraints.pdb",
+        BOX / "water_ions_namd.prm",
+        Path(str(SOURCE) + ".coor"),
+        Path(str(SOURCE) + ".vel"),
+        Path(str(SOURCE) + ".xsc"),
+    ]
+    write_json(
+        work / "source_manifest.json",
+        [
+            dict(
+                path=str(path.relative_to(WORKSPACE)),
+                bytes=path.stat().st_size,
+                sha256=sha256(path),
+            )
+            for path in manifest_files
+        ],
+    )
+    write_json(work / "run_plan.json", plan)
+    record(
+        work,
+        "job_start",
+        job_id=os.environ["SLURM_JOB_ID"],
+        node=os.environ.get("SLURMD_NODENAME"),
+        partition=os.environ.get("SLURM_JOB_PARTITION"),
+        models=models,
+        threads=8,
+        plan=plan,
+    )
+
+    source = SOURCE
+    results = []
+    try:
+        for chunk in CHUNKS:
+            source, result = run_chunk(work, checker, source, chunk)
+            results.append(result)
+        summary = dict(
+            production_prefix=str(source),
+            total_production_ns=50,
+            added_production_ns=45,
+            completed_chunks=[item["stage"] for item in results],
+            result=results[-1],
+        )
+        write_json(work / "workflow_validation.json", summary)
+        record(work, "workflow_complete", **summary)
+    except BaseException as exc:
+        record(
+            work,
+            "workflow_stopped",
+            reason=str(exc),
+            completed_chunks=[item["stage"] for item in results],
+            automatic_retry=False,
+        )
+        raise
+
+
+if __name__ == "__main__":
+    main()

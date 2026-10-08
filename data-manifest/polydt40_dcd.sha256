@@ -1,5 +1,6 @@
-# Omitted large inputs/results for ssdna/polydt40-3m-kcl/
+# Omitted large dT40 inputs and trajectory segments
 # SIZE_BYTES  SHA256  REPOSITORY_RELATIVE_NAME
-41616406  8ab0f3bd2eba1c963c41508f0f695013df0061b740eca7a2d42934f1249da306  ssdna/polydt40-3m-kcl/scripts/box180/system.pdb
-65434575  a0d6451fda52af6c23f9b5072ec1f34eb605b041ee902ea627c43e166f1a6c90  ssdna/polydt40-3m-kcl/scripts/box180/system.psf
-3160774276  a43acd0eadd08328db1511989b98b898b238e149bdc1d38f0439c1d38e49e307  ssdna/polydt40-3m-kcl/results/prod5.dcd
+3160774276  a43acd0eadd08328db1511989b98b898b238e149bdc1d38f0439c1d38e49e307  ssdna/polydt40-3m-kcl/results/trajectory_00_05ns.dcd
+9482322276  506245eba4a9c81dc404c754052593cb42087c2047b3a28440beab0005aa43fc  ssdna/polydt40-3m-kcl/results/trajectory_05_20ns.dcd
+9482322276  9a384ebdb878e8907e5b592d29975aa19338d2a4c9ed5b3ca74c244e321fe41a  ssdna/polydt40-3m-kcl/results/trajectory_20_35ns.dcd
+9482322276  7541bdb9940936af99f6e81ec049682a8ff38a28a7223e3e5b07a61564e33a54  ssdna/polydt40-3m-kcl/results/trajectory_35_50ns.dcd

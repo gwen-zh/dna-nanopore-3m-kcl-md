@@ -1,50 +1,24 @@
 # poly(dT)40 in 3 M KCl
 
-This completed poly(dT)40 DNA-only simulation ran on `dept_gpu` with one
-non-L40 GPU and NAMD 2.14 CUDA, and completed 2,500,000 production steps.
+This dataset contains 50 ns of unrestrained production after minimization,
+heating and three equilibration stages. The simulation used a 2 fs timestep,
+293 K, 1.01325 bar, PME, a 12 Å cutoff, 10 Å switching distance and a 14 Å
+pair list. One non-L40 `dept_gpu` GPU ran NAMD 2.14 CUDA.
 
-The starting DNA was reconstructed through PSF covalent bonds, centered and
-solvated in an explicit 180 Å cubic box. It was not stretched or regenerated.
-The system contains 526,789 atoms, 168,075 waters, 10,662 K⁺ and 10,623 Cl⁻
-ions.
+| Stage | Steps | Time |
+|---|---:|---:|
+| Minimization | 50,000 | — |
+| Heating, 50→293 K | 250,000 | 0.5 ns |
+| Restrained equilibration | 1,000,000 | 2.0 ns |
+| Weak-restraint equilibration | 1,250,000 | 2.5 ns |
+| Unrestrained equilibration | 2,500,000 | 5.0 ns |
+| Unrestrained production | 25,000,000 | 50.0 ns |
 
-## Protocol
+All 5,000 production frames passed bonded-geometry and periodic-image checks.
+The maximum reconstructed DNA bond is 1.737 Å
+and the minimum periodic-image separation is
+85.493 Å.
 
-| Stage | Steps | Time | Backbone restraint scale |
-|---|---:|---:|---:|
-| Minimization | 50,000 | — | 1.0 |
-| Heating, 50→293 K | 250,000 | 0.5 ns | 1.0 |
-| NPT equilibration 1 | 1,000,000 | 2.0 ns | 0.5 |
-| NPT equilibration 2 | 1,250,000 | 2.5 ns | 0.1 |
-| NPT equilibration 3 | 2,500,000 | 5.0 ns | none |
-| Production | 2,500,000 | 5.0 ns | none |
-
-All dynamics use a 2 fs timestep, 293 K, 1.01325 bar, PME, a 12 Å cutoff,
-10 Å switching distance, 14 Å pair list and `rigidBonds all`. Production saves
-one DCD frame every 5,000 steps (10 ps).
-
-## Validation
-
-- 500/500 production frames were read successfully.
-- Maximum reconstructed DNA bond: 1.703735 Å.
-- Minimum DNA-to-periodic-image distance: 85.886434 Å.
-- Endpoint Rg / end-to-end distance: 27.1185 / 73.4963 Å.
-- Mean last-1-ns NAMD temperature: 292.246 K (501 energy records).
-- Mean production box concentrations: 3.2778 M K⁺ and 3.2658 M Cl⁻. K⁺
-  includes the counterions needed to neutralize the DNA.
-
-Stage endpoint checks are in [`results/validation/`](results/validation/), and the full
-production geometry trace is
-[`results/validation/prod5.metrics.csv`](results/validation/prod5.metrics.csv).
-The exact code snapshot used by the job is in [`scripts/`](scripts/README.md).
-`scripts/box180/dna.pdb`, `dna.psf` and `donor.json` document the reconstructed
-DNA donor.
-
-[`results/validation/production_all_frame_summary.json`](results/validation/production_all_frame_summary.json)
-collects the all-frame ranges, last-1-ns temperature and DCD hash in one file.
-
-The large solvated PSF/PDB, binary checkpoints and DCD are not committed.
-Their sizes and SHA-256 hashes are recorded in
-[`data-manifest/polydt40_dcd.sha256`](../../data-manifest/polydt40_dcd.sha256).
-
-The 5 ns production is the dT source used by the structural comparison.
+- [Simulation and analysis results](results/README.md)
+- [Executed production scripts](scripts/README.md)
+- [Matched dA40/dT40 structural comparison](../comparison/results/README.md)

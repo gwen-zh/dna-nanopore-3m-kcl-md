@@ -1,23 +1,22 @@
 # poly(dT)40 results
 
-`validation/` contains all stage endpoint checks, the 500-frame production
-geometry trace and the consolidated all-frame summary for the 5 ns production.
+The production trajectory contains 50.00 ns and 5,000 frames at 10 ps
+intervals. [`validation/production_50ns_metrics.csv`](validation/production_50ns_metrics.csv)
+contains the complete geometry trace; `five_ns_block_summary.csv` contains
+5 ns block statistics.
 
-The 3.16 GB production DCD is omitted from Git and recorded in
-[`data-manifest/polydt40_dcd.sha256`](../../../data-manifest/polydt40_dcd.sha256).
-Current validated comparison figures and tables are in
+![Full 50 ns dT40 time courses](01_full_50ns_timecourses.png)
+
+The 45.01–50.00 ns mean Rg is 17.13 Å and the mean 5′–3′
+distance is 37.44 Å. The final-frame values are
+15.77 Å and 28.16 Å. The minimum
+DNA periodic-image separation over 50 ns is
+85.49 Å.
+
+[`representative_45_50ns.pdb`](representative_45_50ns.pdb) is a real sampled
+representative structure from the late window. The full dA40/dT40 figures,
+tables and PyMOL display are in
 [`../../comparison/results/`](../../comparison/results/README.md).
 
-## Analysis figure preview
-
-These figures contain the dT40 curves and residue-level measurements alongside
-the matched dA40 window. Open the
-[`complete seven-figure gallery`](../../comparison/results/README.md)
-for contact maps, distributions, ion/hydration contacts and representative
-structures, with downloadable PNG and PDF files.
-
-![dA40 and dT40 global structural metrics](../../comparison/results/01_global_structure.png)
-
-![dA40 and dT40 per-residue profiles](../../comparison/results/02_residue_profiles.png)
-
-![dA40 and dT40 base-state heat maps](../../comparison/results/03_base_state_heatmaps.png)
+Large DCD files are omitted from Git; sizes and SHA-256 hashes are recorded in
+[`../../../data-manifest/polydt40_dcd.sha256`](../../../data-manifest/polydt40_dcd.sha256).

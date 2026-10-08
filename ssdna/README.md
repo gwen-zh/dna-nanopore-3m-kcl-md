@@ -1,37 +1,19 @@
 # ssDNA simulations
 
-The ssDNA files are organized by sequence. Each retained sequence has its own
-`scripts/` and `results/` directory; cross-sequence analysis is kept separately
-under `comparison/`.
-
 | Dataset | Scripts | Results |
 |---|---|---|
 | poly(dA)40 in 3 M KCl | [`polyda40-3m-kcl/scripts/`](polyda40-3m-kcl/scripts/README.md) | [`polyda40-3m-kcl/results/`](polyda40-3m-kcl/results/README.md) |
 | poly(dT)40 in 3 M KCl | [`polydt40-3m-kcl/scripts/`](polydt40-3m-kcl/scripts/README.md) | [`polydt40-3m-kcl/results/`](polydt40-3m-kcl/results/README.md) |
 | dA40/dT40 comparison | [`comparison/scripts/`](comparison/scripts/README.md) | [`comparison/results/`](comparison/results/README.md) |
 
-## Analysis figures
+Both sequences contain 50 ns of production after the same minimization,
+heating and 9.5 ns equilibration schedule. The structural comparison uses the
+matched 45.01–50.00 ns window with 500 frames per sequence.
 
-The complete seven-figure gallery is available in the
-[`comparison results`](comparison/results/README.md),
-with both PNG and PDF versions. The first two figures are previewed here so the
-analysis is visible directly from the ssDNA page.
+![Global structural metrics](comparison/results/01_global_structure.png)
 
-![Global structural metrics for dA40 and dT40](comparison/results/01_global_structure.png)
+![Per-residue structural profiles](comparison/results/02_residue_profiles.png)
 
-![Per-residue structural profiles for dA40 and dT40](comparison/results/02_residue_profiles.png)
-
-The common preparation is 50,000 minimization steps, 0.5 ns heating, 2 ns
-restrained equilibration, 2.5 ns weak-restraint equilibration and 5 ns
-unrestrained equilibration, with a 2 fs timestep at 293 K. Both dA and dT dataset have one 5 ns production block after the same
-preparation schedule.
-
-Large omitted trajectories are recorded in
-[`polyda40_dcd.sha256`](../data-manifest/polyda40_dcd.sha256) and
-[`polydt40_dcd.sha256`](../data-manifest/polydt40_dcd.sha256).
-
-The validated comparison uses 500 frames per sequence after PSF-bond
-reconstruction, with both sequences sampled over the matched 0.01–5.00 ns
-production window. It covers Rg, end-to-end and contour lengths, shape,
-stacking, χ/syn occupancy, outward base orientation, contacts, hydrogen bonds,
-RMSF, ion association and hydration.
+The analysis includes size and shape, stacking, χ/syn state, outward-base
+orientation, nonlocal contacts, hydrogen bonds, ion association, hydration,
+representative structures and periodic-image validation.

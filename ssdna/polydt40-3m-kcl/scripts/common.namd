@@ -25,4 +25,3 @@ xstFreq 10000
 dcdFreq 5000
 binaryOutput yes
 binaryRestart yes
-seed 9152026
