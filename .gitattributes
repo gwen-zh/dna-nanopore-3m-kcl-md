@@ -4,3 +4,6 @@
 *.psf -diff
 *.log -diff
 *.prm -diff
+*.mp4 binary
+*.png binary
+*.pdf binary

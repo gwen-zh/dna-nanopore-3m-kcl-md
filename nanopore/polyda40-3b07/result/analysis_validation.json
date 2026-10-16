@@ -1,0 +1,9 @@
+{
+  "workflow_complete": true,
+  "strict_passed_prefix_count": 40,
+  "out_of_order_passage": false,
+  "frames_processed": 386,
+  "endpoint_C1_below_trans": 40,
+  "minimum_DNA_protein_heavy_A": 2.557084292774081,
+  "maximum_DNA_bond_A": 1.7025505381487798
+}

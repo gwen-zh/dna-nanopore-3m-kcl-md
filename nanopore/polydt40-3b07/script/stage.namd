@@ -1,0 +1,40 @@
+# Restartable restrained or field-driven stage for accelerated translocation.
+cd $env(SYSTEM_DIR)
+source system_settings.namd
+set efield $env(EFIELD_Z)
+
+structure system.psf
+coordinates system.pdb
+bincoordinates "$env(INPUT_PREFIX).coor"
+binvelocities "$env(INPUT_PREFIX).vel"
+extendedSystem "$env(INPUT_PREFIX).xsc"
+outputName $env(OUTPUT_PREFIX)
+firsttimestep 0
+
+set pair_distance 14.0
+set patch_margin 0.0
+set md_timestep 1
+set energy_frequency 1000
+source $env(WORKSPACE)/pore-resume-20260912/common.namd
+
+seed $env(MD_SEED)
+constraints on
+consref restraints_prod.pdb
+conskfile restraints_prod.pdb
+conskcol B
+constraintScaling 1.0
+
+if {[info exists env(COLVARS_CONFIG)] && $env(COLVARS_CONFIG) ne ""} {
+    colvars on
+    colvarsConfig $env(COLVARS_CONFIG)
+}
+
+langevin on
+langevinTemp 293
+langevinDamping 1.0
+langevinHydrogen off
+if {$env(APPLY_FIELD) eq "yes"} {
+    eFieldOn on
+    eField 0.0 0.0 $efield
+}
+run $env(STAGE_STEPS)

@@ -16,10 +16,12 @@ structural comparison uses 45.01–50.00 ns from each sequence.
 
 ## Nanopore workflows
 
-Four 3 M KCl systems cover dA40 and dT40 with 7AHL and 3B07. Shared system
-preparation, production and analysis code is under [`nanopore/`](nanopore/README.md).
-The [nanopore protocol](nanopore/PROTOCOL.md) describes force fields,
-equilibration, applied field, restraints and validation checks.
+Four 3 M KCl systems cover dA40 and dT40 with 7AHL and 3B07. Each combination
+has its own `script/` and `result/` directories under
+[`nanopore/`](nanopore/README.md). The [nanopore protocol](nanopore/PROTOCOL.md)
+describes the applied field, ordered 5′-first pathway, interaction analysis and
+validation checks.
 
-Large trajectories and solvated systems are omitted from Git. Their sizes and
-SHA-256 hashes are stored under [`data-manifest/`](data-manifest/).
+Large raw trajectories and solvated restart files are omitted from Git. Compact
+analysis tables, structures, figures and trajectory movies are included for
+completed pathways.
