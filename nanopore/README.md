@@ -33,7 +33,7 @@ remaining pathways will supply the matched within-pore comparisons.
 These are high-field, ordered steered-MD pathways designed to obtain complete
 translocation geometries and identify contacts along the pore. They support
 residue-level interaction hypotheses for the experimental current signal, but
-they do not directly predict the experimental −120 mV dwell time, unbiased
+they do not directly predict the experimental voltage dwell time, unbiased
 translocation rate, binding free energy or blockade current. Current prediction
 requires a separate ion-current calculation or conductance workflow.
 
