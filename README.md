@@ -50,5 +50,5 @@ describes the applied field, ordered 5′-first pathway, interaction analysis an
 validation checks.
 
 Large raw trajectories and solvated restart files are omitted from Git. Compact
-analysis tables, structures, figures and trajectory movies are included for
-completed pathways.
+analysis tables, structures, figures and complete trajectory movies are
+included for all four pathways.
