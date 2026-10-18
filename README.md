@@ -47,7 +47,8 @@ Four 3 M KCl systems cover dA40 and dT40 with 7AHL and 3B07. Each combination
 has its own `script/` and `result/` directories under
 [`nanopore/`](nanopore/README.md). The [nanopore protocol](nanopore/PROTOCOL.md)
 describes the applied field, ordered 5′-first pathway, interaction analysis and
-validation checks.
+validation checks. The [four-pathway comparison](nanopore/COMPARISON.md)
+summarizes the dA40/dT40 differences in both pores.
 
 Large raw trajectories and solvated restart files are omitted from Git. Compact
 analysis tables, structures, figures and complete trajectory movies are

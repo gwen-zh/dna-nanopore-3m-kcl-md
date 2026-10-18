@@ -15,6 +15,7 @@ in `result/`.
 - [poly(dA)40–7AHL](polyda40-7ahl/README.md)
 - [poly(dT)40–3B07](polydt40-3b07/README.md)
 - [poly(dT)40–7AHL](polydt40-7ahl/README.md)
+- [Four-pathway comparison and conclusions](COMPARISON.md)
 - [Simulation and analysis protocol](PROTOCOL.md)
 
 ## Completed-pathway overview
@@ -26,19 +27,9 @@ in `result/`.
 | poly(dT)40–3B07 | 376 | 9.375 | 9.74 | 1.72 | 1.05 | 2.71 |
 | poly(dT)40–7AHL | 433 | 10.800 | 12.06 | 2.02 | 1.09 | 6.48 |
 
-All four sequence–pore combinations are now represented, which permits matched
-within-pore descriptive comparisons. Each row is still one driven pathway, so
-differences should be treated as interaction hypotheses rather than converged
-sequence-specific ensemble averages.
-
-## Interpretation boundary
-
-These are high-field, ordered steered-MD pathways designed to obtain complete
-translocation geometries and identify contacts along the pore. They support
-residue-level interaction hypotheses for the experimental current signal, but
-they do not directly predict the experimental voltage dwell time, unbiased
-translocation rate, binding free energy or blockade current. Current prediction
-requires a separate ion-current calculation or conductance workflow.
+The [four-pathway comparison](COMPARISON.md) summarizes the matched dA40/dT40
+differences within each pore and the interaction patterns associated with the
+experimental current response.
 
 Large solvated trajectories and restart checkpoints are retained in the cluster
 workspace and are not duplicated in Git. Each completed `result/` contains the
