@@ -64,3 +64,10 @@
 - The more flexible dT40 chain can access more wall-bound geometries, whereas
   the more strongly stacked dA40 chain retains a more ordered translocation
   conformation.
+
+## Trajectory movies
+
+- [dA40 through 3B07](polyda40-3b07/result/trajectory.mp4)
+- [dA40 through 7AHL](polyda40-7ahl/result/trajectory.mp4)
+- [dT40 through 3B07](polydt40-3b07/result/trajectory.mp4)
+- [dT40 through 7AHL](polydt40-7ahl/result/trajectory.mp4)
